@@ -1,0 +1,13 @@
+#
+# $Id: auto.master.RIO,v 1.2 2010/07/23 20:40:53 dyancey Exp $
+#
+# Sample auto.master file
+# This is an automounter map and it has the following format
+# key [ -mount-options-separated-by-comma ] location
+# For details of the format look at autofs(5).
+#/misc  /etc/auto.misc --timeout=60
+/cfslocal       /etc/auto.cfs --ghost
+/net    /etc/auto.net
+/-	/etc/auto.direct
++auto.master
+

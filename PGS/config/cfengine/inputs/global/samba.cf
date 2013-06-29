@@ -1,0 +1,27 @@
+
+control:
+	
+	actionsequence = ( processes shellcommands ) 
+	sysadm	       = ( Global-IT-LinuxAdmins@pgs.com )
+	smtpserver     = ( houms21.onshore.pgs.com )	
+	
+processes:
+		"/usr/centeris/sbin/likewise-winbindd"
+			restart "/sbin/service likewise-open restart"
+			
+		"winbindd"
+			exclude="likewise-winbindd"
+			restart "/sbin/service winbind restart"	
+		"smbd"
+			action=warn
+			matches=<2
+			elsedefine=HUP_smb
+
+		"automount"
+			restart "/sbin/service autofs restart"
+
+shellcommands:
+
+	HUP_smb::
+			"/sbin/service winbind restart"
+			"/sbin/service smb restart"

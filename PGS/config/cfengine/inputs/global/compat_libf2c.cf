@@ -1,0 +1,16 @@
+control:
+
+        actionsequence  = ( packages shellcommands )
+
+packages:
+        AllLinuxWorkstations.centos_5::
+
+                compat-libf2c-34.i386 pkgmgr=rpm elsedefine=needs_f2c
+                compat-libf2c-34.x86_64 pkgmgr=rpm elsedefine=needs_f2c
+
+shellcommands:
+
+        needs_f2c::
+                "${yum_bin} -y install compat-libf2c-34.i386"
+                "${yum_bin} -y install compat-libf2c-34.x86_64"
+

@@ -1,0 +1,13 @@
+control:
+	actionsequence = ( copy files directories editfiles )
+
+	files:
+		HOU::
+		     /local
+				mode=777
+				group=6312 
+				action=fixall
+				r=1	
+import:
+	HOU::
+		site/houston/autofs.cf	

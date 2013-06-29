@@ -1,0 +1,50 @@
+[logging]
+ default = FILE:/var/log/krb5libs.log
+ kdc = FILE:/var/log/krb5kdc.log
+ admin_server = FILE:/var/log/kadmind.log
+
+[libdefaults]
+ default_realm = ONSHORE.PGS.COM
+ dns_lookup_realm = false
+ dns_lookup_kdc = true
+ ticket_lifetime = 24h
+ forwardable = yes
+ default_tgs_enctypes = RC4-HMAC DES-CBC-MD5 DES-CBC-CRC
+ default_tkt_enctypes = RC4-HMAC DES-CBC-MD5 DES-CBC-CRC
+ preferred_enctypes = RC4-HMAC DES-CBC-MD5 DES-CBC-CRC
+ default_keytab_name = /etc/krb5.keytab
+
+[realms]
+ ONSHORE.PGS.COM = {
+  auth_to_local = RULE:[1:$0\$1](^ONSHORE\.PGS\.COM\\.*)s/^ONSHORE\.PGS\.COM/ONSHORE/
+  auth_to_local = RULE:[1:$0\$1](^ONSHORE\.PGS\.COM\\.*)s/^ONSHORE\.PGS\.COM/ONSHORE/
+  auth_to_local = RULE:[1:$0\$1](^OFFSHORE\.PGS\.COM\\.*)s/^OFFSHORE\.PGS\.COM/OFFSHORE/
+  auth_to_local = RULE:[1:$0\$1](^PGS\.COM\\.*)s/^PGS\.COM/PGS/
+  auth_to_local = RULE:[1:$0\$1](^LTUSER\.PGS\.COM\\.*)s/^LTUSER\.PGS\.COM/LTUSER/
+  auth_to_local = DEFAULT
+ }
+
+[domain_realm]
+ .hou.compute.pgs.com = ONSHORE.PGS.COM
+ hou.compute.pgs.com = ONSHORE.PGS.COM
+ .onshore.pgs.com = ONSHORE.PGS.COM
+ onshore.pgs.com = ONSHORE.PGS.COM
+ .offshore.pgs.com = OFFSHORE.PGS.COM
+ .pgs.com = PGS.COM
+ .ltuser.pgs.com = LTUSER.PGS.COM
+ .pgsxnet.com = PGSXNET.COM
+
+[appdefaults]
+ pam = {
+   debug = false
+   ticket_lifetime = 36000
+   renew_lifetime = 36000
+   forwardable = true
+   krb4_convert = false
+   mappings = ONSHORE\\(.*) $1@ONSHORE.PGS.COM
+   validate = true
+ }
+ httpd = {
+   mappings = ONSHORE\\(.*) $1@ONSHORE.PGS.COM
+   reverse_mappings = (.*)@ONSHORE\.PGS\.COM ONSHORE\$1
+ }

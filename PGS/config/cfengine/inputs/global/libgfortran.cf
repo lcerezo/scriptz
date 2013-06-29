@@ -1,0 +1,26 @@
+control:
+
+        actionsequence  = ( packages shellcommands )
+
+packages:
+	el5::
+
+        	libgfortran  	pkgmgr=rpm 
+				cmp=ge
+				version=0:4.1.2
+				elsedefine=needs_libgfortran
+
+                libgfortran44   pkgmgr=rpm
+                                cmp=ge
+				version=0:4.4.0-6.el5
+                                elsedefine=needs_libgfortran44
+
+shellcommands:
+
+        needs_libgfortran::
+        
+		        "${yum_bin} -y install libgfortran"
+
+        needs_libgfortran44::
+
+                        "${yum_bin} -y install libgfortran44"

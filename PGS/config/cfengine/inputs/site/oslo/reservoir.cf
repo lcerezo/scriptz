@@ -1,0 +1,24 @@
+control:
+
+	actionsequence = ( editfies shellcommands )
+groups:
+	
+	reservoir = ( FileExists(/etc/pgs/reservior )
+
+editfiles:
+
+	OSL.reservoir::
+			{ /etc/auto.localdirect
+			  AppendIfNoSuchLine "tps   caesar.oslo.ogs.com:/vol/vol0/&"
+		 	  DefineClasses "HUPautofs"
+			}
+	
+shellcommands:
+
+	HUPautofs::
+		"/etc/init.d/autofs reload"
+
+links:
+
+	        OSL.reservoir::
+			/tps ->! /localdirect/tps

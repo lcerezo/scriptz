@@ -1,0 +1,204 @@
+#pgs GDM theme
+#alters the GDM login screen to a pgs styeled one
+# Jan 9, 2005 | Initial Creation | Luis E. Cerezo
+
+control:
+	actionsequence = ( copy links editfiles )
+        AddInstallable = ( failure )
+
+	copy:
+		
+		AllLinuxWorkstations.!el6::
+			${configroot}/config/pgstheme	 			dest=/usr/share/gdm/themes/pgstheme
+										server=${server}
+										action=fix
+										recurse=inf
+										ignore=CVS
+										backup=false
+										failover=failure
+	
+                        ${configroot}/config/sysconfig-desktop                  dest=/etc/sysconfig/desktop
+                                                                                server=${server}
+                                                                                action=fix
+                                                                                recurse=inf
+                                                                                ignore=CVS
+                                                                                backup=false
+                                                                                failover=failure
+
+
+		
+		AllLinuxWorkstations::	
+                        ${configroot}/config/desktop/PGS.directory              dest=/usr/share/desktop-directories/PGS.directory
+                                                                                server=${server}
+                                                                                owner=root
+                                                                                group=root
+                                                                                mode=0644
+                                                                                type=sum
+                                                                                failover=failure
+
+                        ${configroot}/config/desktop/PGS-pgs-wts.desktop        dest=/usr/share/applications/PGS-pgs-wts.desktop
+                                                                                server=${server}
+                                                                                owner=root
+                                                                                group=root
+                                                                                mode=0644
+                                                                                type=sum
+                                                                                failover=failure
+
+                        ${configroot}/config/desktop/PGS-pgs-wts-dual.desktop   dest=/usr/share/applications/PGS-pgs-wts-dual.desktop
+                                                                                server=${server}
+                                                                                owner=root
+                                                                                group=root
+                                                                                mode=0644
+                                                                                type=sum
+                                                                                failover=failure
+
+                        ${configroot}/config/desktop/PGS-pgs-wts-small.desktop  dest=/usr/share/applications/PGS-pgs-wts-small.desktop
+                                                                                server=${server}
+                                                                                owner=root
+                                                                                group=root
+                                                                                mode=0644
+                                                                                type=sum
+                                                                                failover=failure
+
+                        ${configroot}/config/desktop/PGS-launcher.desktop       dest=/usr/share/applications/PGS-launcher.desktop
+                                                                                server=${server}
+                                                                                owner=root
+                                                                                group=root
+                                                                                mode=0644
+                                                                                type=sum
+                        
+
+			AllLinuxWorkstations.el5::
+			
+			 ${configroot}/config/cfengine/inputs/global/cfgfiles/custom.conf-gdm-el5	dest=/etc/gdm/custom.conf
+                                                                                server=${server}
+                                                                                owner=root
+                                                                                group=root
+                                                                                mode=0644
+                                                                                type=sum
+										backup=false
+                                                                                failover=failure
+		AllLinuxWorkstations.el6::
+			${configroot}/config/pgstheme-kdm                       dest=/usr/share/kde4/apps/kdm/themes/pgstheme
+                                                                                server=${server}
+                                                                                action=fix
+                                                                                recurse=inf
+                                                                                ignore=CVS
+                                                                                backup=false
+                                                                                failover=failure
+
+                        ${configroot}/config/kde4/sysconfig-desktop             dest=/etc/sysconfig/desktop
+                                                                                server=${server}
+                                                                                action=fix
+                                                                                recurse=inf
+                                                                                ignore=CVS
+                                                                                backup=false
+                                                                                failover=failure
+
+		
+		AllLinuxWorkstations.!el6.failure::
+                        ${configroot}/config/pgstheme                           dest=/usr/share/gdm/themes/pgstheme
+                                                                                server=${catchall_server}
+                                                                                action=fix
+                                                                                recurse=inf
+                                                                                ignore=CVS
+                                                                                backup=false
+
+		AllLinuxWorkstations.failure::
+                        ${configroot}/config/desktop/PGS.directory              dest=/usr/share/desktop-directories/PGS.directory
+                                                                                server=${catchall_server}
+                                                                                owner=root
+                                                                                group=root
+                                                                                mode=0644
+                                                                                type=sum
+
+                        ${configroot}/config/desktop/PGS-pgs-wts.desktop        dest=/usr/share/applications/PGS-pgs-wts.desktop
+                                                                                server=${catchall_server}
+                                                                                owner=root
+                                                                                group=root
+                                                                                mode=0644
+                                                                                type=sum
+
+                        ${configroot}/config/desktop/PGS-pgs-wts-dual.desktop   dest=/usr/share/applications/PGS-pgs-wts-dual.desktop
+                                                                                server=${catchall_server}
+                                                                                owner=root
+                                                                                group=root
+                                                                                mode=0644
+                                                                                type=sum
+
+                        ${configroot}/config/desktop/PGS-pgs-wts-small.desktop  dest=/usr/share/applications/PGS-pgs-wts-small.desktop
+                                                                                server=${catchall_server}
+                                                                                owner=root
+                                                                                group=root
+                                                                                mode=0644
+                                                                                type=sum
+
+                        ${configroot}/config/desktop/PGS-launcher.desktop       dest=/usr/share/applications/PGS-launcher.desktop
+                                                                                server=${catchall_server}
+                                                                                owner=root
+                                                                                group=root
+                                                                                mode=0644
+                                                                                type=sum
+
+
+		failure.AllLinuxWorkstations.el5::
+			
+			 ${configroot}/config/cfengine/inputs/global/cfgfiles/custom.conf-gdm-el5	dest=/etc/gdm/custom.conf
+                                                                                server=${server}
+                                                                                owner=root
+                                                                                group=root
+                                                                                mode=0644
+                                                                                type=sum
+										backup=false
+                                                                                failover=failure
+                AllLinuxWorkstations.el6.failure::
+                        ${configroot}/config/pgstheme-kdm                           dest=/usr/share/kde4/apps/kdm/themes/pgstheme
+                                                                                server=${catchall_server}
+                                                                                action=fix
+                                                                                recurse=inf
+                                                                                ignore=CVS
+                                                                                backup=false
+
+                        ${configroot}/config/kde4/sysconfig-desktop             dest=/etc/sysconfig/desktop
+                                                                                server=${catchall_server}
+                                                                                action=fix
+                                                                                recurse=inf
+                                                                                ignore=CVS
+                                                                                backup=false
+
+
+	links:
+
+		AllLinuxWorkstations::
+
+			/usr/share/gdm/themes/Default 	->! 	/usr/share/gdm/themes/pgstheme		type=absolute
+	editfiles:
+	
+		AllLinuxWorkstations.el6::
+
+			{ /etc/kde/kdm/kdmrc
+			LocateLineMatching "^Theme=.*"
+			ReplaceLineWith "Theme=/usr/share/kde4/apps/kdm/themes/pgstheme"
+			LocateLineMatching "^ServerArgsLocal=.*"
+			ReplaceLineWith "ServerArgsLocal=-nr"
+			}
+
+		AllLinuxWorkstations.el4::
+			
+        		{ /etc/X11/gdm/gdm.conf
+        		ReplaceAll "#DisallowTCP=true" With "DisallowTCP=false"
+        		}
+
+                AllLinuxWorkstations.rhel_3::
+
+                        { /etc/X11/gdm/gdm.conf
+                        LocateLineMatching "\[greeter\]"
+                        IncrementPointer   "1"
+                        BeginGroupIfNoMatch "GraphicalTheme=pgstheme"
+
+                                IncrementPointer "-1"
+                                InsertLine "GraphicalTheme=pgstheme"
+
+                        EndGroup
+			}
+

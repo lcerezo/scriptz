@@ -1,0 +1,51 @@
+control:
+	actionsequence = ( copy )
+	AddInstallable = (failure )
+
+copy:
+	fedora.32_bit::
+	${configroot}/config/yum/yum.conf.fc3 		dest=/etc/yum.conf
+                                                        server=${server}
+                                                        owner=root
+                                                        group=root
+                                                        mode=0644
+							type=sum
+							failover=failure
+        failure::
+        ${configroot}/config/yum/yum.conf.fc3           dest=/etc/yum.conf
+                                                        server=${catchall_server}
+                                                        owner=root
+                                                        group=root
+                                                        mode=0644
+                                                        type=sum
+
+	fedora.64_bit::
+	${configroot}/config/yum/yum.conf.fc3.x64 	dest=/etc/yum.conf
+                                                        server=${server}
+                                                        owner=root
+                                                        group=root
+                                                        mode=0644
+							type=sum
+							failover=failure
+
+	${configroot}/config/desktop/fc3.applications.menu 		dest=/etc/xdg/menus/applications.menu
+                                                        		server=${server}
+                                                        		owner=root
+                                                        		group=root
+                                                        		mode=0644
+									type=sum
+									failover=failure
+        failure::
+        ${configroot}/config/yum/yum.conf.fc3.x64       dest=/etc/yum.conf
+                                                        server=${catchall_server}
+                                                        owner=root
+                                                        group=root
+                                                        mode=0644
+                                                        type=sum
+
+        ${configroot}/config/desktop/fc3.applications.menu              dest=/etc/xdg/menus/applications.menu
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum

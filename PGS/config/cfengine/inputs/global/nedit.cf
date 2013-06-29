@@ -1,0 +1,17 @@
+control:
+
+        actionsequence  = ( packages shellcommands )
+
+packages:
+		linux::
+
+        	nedit  pkgmgr=rpm elsedefine=needs_nedit
+
+shellcommands:
+
+        needs_nedit.!el6::
+                "${yum_bin} -y install nedit"
+
+        needs_nedit.el6::
+                "${yum_bin} -y --enablerepo=epel install nedit"
+

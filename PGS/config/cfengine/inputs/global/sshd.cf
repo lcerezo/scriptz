@@ -1,0 +1,45 @@
+#ssh/sshfd config changes
+#alters the sshd configs to show the /etc/issue & forward X by default.
+# Jan 9, 2005 | Initial Creation | Luis E. Cerezo
+
+control:
+	actionsequence = ( copy editfiles shellcommands )
+        AddInstallable = ( failure )
+	
+	copy:
+		
+	!holoupdaters::
+        ${configroot}/config/issue/issue                        dest=/etc/issue
+                                                                server=${server}
+                                                                owner=root
+                                                                group=root
+                                                                mode=0644
+                                                                type=sum
+								failover=failure
+	!holoupdaters.failure::
+        ${configroot}/config/issue/issue                        dest=/etc/issue
+                                                                server=${catchall_server}
+                                                                owner=root
+                                                                group=root
+                                                                mode=0644
+                                                                type=sum
+	
+	editfiles:
+
+	linux::
+			 { /etc/ssh/sshd_config
+       			 ReplaceAll "#Banner /some/path" With "Banner /etc/issue"
+       			 AppendIfNoSuchLine      "X11Forwarding yes"
+			 DefineClasses	"HUPsshd"
+       			 }
+			 { /etc/ssh/ssh_config
+       			 AppendIfNoSuchLine      "ForwardX11 yes"
+       			 AppendIfNoSuchLine      "ForwardAgent yes"
+       			 AppendIfNoSuchLine      "ForwardX11Trusted yes"
+       			 AppendIfNoSuchLine      "StrictHostKeyChecking no"
+       			 }
+	shellcommands:
+
+		linux.HUPsshd::
+
+			"/sbin/service sshd restart"	useshell=false

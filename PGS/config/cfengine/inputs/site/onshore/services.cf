@@ -1,0 +1,50 @@
+control:
+	actionsequence = ( editfiles shellcommands )
+
+editfiles:
+	onshorecrew::
+
+        		{ /etc/xinetd.d/rexec
+			BeginGroupIfLineMatching "^.*disable.*yes.*$"
+        		ReplaceLineWith "disable = no"
+			DefineInGroup	"HUPxinetd"
+			EndGroup
+        		}		
+
+                        { /etc/xinetd.d/rlogin
+			BeginGroupIfLineMatching "^.*disable.*yes.*$"
+        		ReplaceLineWith "disable = no"
+			DefineInGroup	"HUPxinetd"
+			EndGroup
+                        }
+
+                        { /etc/xinetd.d/rsh
+			BeginGroupIfLineMatching "^.*disable.*yes.*$"
+        		ReplaceLineWith "disable = no"
+			DefineInGroup	"HUPxinetd"
+			EndGroup
+                        }
+
+                        { /etc/xinetd.d/telnet
+			BeginGroupIfLineMatching "^.*disable.*yes.*$"
+        		ReplaceLineWith "disable = no"
+			DefineInGroup	"HUPxinetd"
+			EndGroup
+                        }
+
+                        { /etc/xinetd.d/gssftp
+			BeginGroupIfLineMatching "^.*disable.*yes.*$"
+        		ReplaceLineWith "disable = no"
+			DefineInGroup	"HUPxinetd"
+			EndGroup
+			BeginGroupIfLineMatching "^.*server_args.*-a.*$"
+        		ReplaceLineWith "server_args = -l"
+			DefineInGroup	"HUPxinetd"
+			EndGroup
+                        }
+
+shellcommands:
+		linux.HUPxinetd::
+
+			"/sbin/service xinetd restart"	useshell=false
+	

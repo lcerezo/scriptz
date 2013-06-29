@@ -1,0 +1,58 @@
+# standard .cshrc for PGS
+# do not change this file. Add your own setting in .userrc file
+
+if ( ! $?PGS_ROOT ) then
+   setenv PGS_ROOT /pgs
+endif
+
+if ( ! $?PGS_LOGIN ) then
+   # use common login for both dev and prod
+   setenv PGS_LOGIN /pgs/login
+   # setenv PGS_LOGIN /cm/login/pgs
+endif
+
+# set your default user type
+if ( ! $?USER_TYPE ) then
+   # setenv USER_TYPE "basic"
+
+   # on SunOS default is "ags"
+   set osarch = `uname`
+   if ( "$osarch" == "SunOS" ) then
+      setenv USER_TYPE "ags"
+   else
+      setenv USER_TYPE "cm"
+   endif
+   unset osarch
+endif
+
+switch ( $USER_TYPE )
+case "cm": 
+   if ( ! $?CM_RLSE ) then
+      setenv CM_RLSE "cm-3.4.2"
+   endif
+   breaksw
+
+case "ags":
+   breaksw
+
+case "mde":
+   breaksw
+
+case "cm-ags":
+   if ( ! $?CM_RLSE ) then
+      setenv CM_RLSE "cm-3.4.2"
+   endif
+   breaksw
+
+case "none":
+   breaksw
+
+default:
+  #
+endsw
+
+if ( -f $PGS_LOGIN/common.cshrc ) then
+   source $PGS_LOGIN/common.cshrc
+endif
+
+###### END BLOCK

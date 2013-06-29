@@ -1,0 +1,19 @@
+control:
+
+        actionsequence  = ( packages shellcommands )
+
+packages:
+	AllLinuxWorkstations::
+
+        	samba-client  	pkgmgr=rpm 
+				cmp=ge
+				version=0:3.0.28-1
+				elsedefine=UpdateSambaClient
+
+shellcommands:
+
+        UpdateSambaClient::
+        
+		        "${yum_bin} -y erase samba-common.i386"
+		        "${yum_bin} -y update samba-client"
+

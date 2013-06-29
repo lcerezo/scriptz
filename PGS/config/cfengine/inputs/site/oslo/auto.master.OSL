@@ -1,0 +1,4 @@
+/misc		/etc/auto.misc
+/net		/etc/auto.net
+/users		/etc/auto.users
+/- 		/etc/autofs_pgs/auto.direct.OSL

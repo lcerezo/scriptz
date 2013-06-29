@@ -1,0 +1,3 @@
+/net /etc/auto.net
+/users /etc/auto.home
+/localdirect /etc/auto.local

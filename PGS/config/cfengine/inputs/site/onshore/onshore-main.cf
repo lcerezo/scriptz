@@ -1,0 +1,11 @@
+control:
+
+	import:
+		onshorecrew::
+
+				site/onshore/services.cf
+				site/onshore/accounts.cf
+				site/onshore/perms.cf
+				site/onshore/rhosts.cf
+				site/onshore/exports.cf
+				site/onshore/root.cf

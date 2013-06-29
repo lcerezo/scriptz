@@ -1,0 +1,16 @@
+control:
+
+	actionsequence = ( copy )
+	
+
+copy:
+
+	linux::
+			${configroot}/config/cfengine/inputs/global/cfgfiles/SOURCE-FILE
+							dest=/FULL/PATH/TO/DEST...  BE MINDFUL OF REMOTE NFS MOUNTS. CHECK, DOUBLE CHECK!
+							mode=0755
+							action=fix
+							server=${server}
+							backup=false
+							type=sum
+							inform=false

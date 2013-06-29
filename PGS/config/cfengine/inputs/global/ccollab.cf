@@ -1,0 +1,25 @@
+control:
+
+        actionsequence  = ( packages shellcommands links )
+        Split           = ( | )
+        #post_rpms_base_url     = ( http://wraith.houston.pgs.com/post/post-install-rpms/ )
+
+
+packages:
+
+        ccollab_client  pkgmgr=rpm elsedefine=needs_ccollab
+        ccollab_client  pkgmgr=rpm version=4.0.828 cmp=ge elsedefine=needs_ccollab_upgrade
+
+
+shellcommands:
+
+        needs_ccollab_upgrade::
+                #"$(rpm_bin) -ivh http://smartbearsoftware.com/downloads/ccollab_client_4_0_817_linux.rpm"
+                "$(rpm_bin) -Uvh http://www.smartbear.com/downloads/ccollab_client_4_0_828_linux.rpm"
+        needs_ccollab::
+                "$(rpm_bin) -ivh http://www.smartbear.com/downloads/ccollab_client_4_0_828_linux.rpm"
+
+links:
+        needs_ccollab::
+
+        /bin/ccollab -> /opt/ccollab-client/ccollab

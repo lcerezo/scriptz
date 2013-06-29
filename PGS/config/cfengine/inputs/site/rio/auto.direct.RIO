@@ -1,0 +1,10 @@
+/datadb rnfs01.rio.compute.pgs.com:/vol/datadb
+/apps rnfs02.rio.compute.pgs.com:/vol/apps
+/cm rnfs02.rio.compute.pgs.com:/vol/cm
+/users rnfs02.rio.compute.pgs.com:/vol/users
+/cfs2 rpan02.rio.compute.pgs.com:/cfs
+/cfs4 rpan04.rio.compute.pgs.com:/ 
+/cfs5 rpan05.rio.compute.pgs.com:/
+/cfs7 rpan07.rio.compute.pgs.com:/
+/hypdata -fstype=panfs,rw,iscsi-sock-rsize=131072 panfs://rpan04.rio.compute.pgs.com/
+/pgs rnfs02.rio.compute.pgs.com:/vol/pgs

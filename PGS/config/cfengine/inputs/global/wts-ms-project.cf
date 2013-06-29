@@ -1,0 +1,16 @@
+control:
+
+	actionsequence = ( copy )
+	
+
+copy:
+
+	linux::
+			${configroot}/config/cfengine/inputs/global/cfgfiles/wts-msproj
+							dest=/bin/wtsproj
+							mode=0755
+							action=fix
+							server=${server}
+							backup=false
+							type=sum
+							inform=false

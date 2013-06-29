@@ -1,0 +1,31 @@
+control:
+	
+	actionsequence	= ( packages shellcommands files links )
+	Split		= ( | )
+
+	linux::
+	#rpm_bin	= ( /bin/rpm )
+	java_rpm = ( jre-6u21-linux-i586.rpm )
+
+packages:
+	
+	jre			version=0:1.6.0_21 
+				cmp=ge
+				pkgmgr=rpm
+				elsedefine=needs_java
+
+shellcommands:
+
+	needs_java::
+		"$(rpm_bin) -Uvh $(rpms_base_url)$(java_rpm)"
+
+
+files:
+	/usr/java
+			
+			mode=755
+			recurse=inf
+			action=fixall
+links:
+
+	/usr/lib/mozilla/plugins/libnpjp2.so -> /usr/java/jre1.6.0_21/lib/i386/libnpjp2.so 

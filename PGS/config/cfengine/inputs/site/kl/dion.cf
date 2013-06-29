@@ -1,0 +1,79 @@
+#kl local configs
+#May 23 2007 |initial creation| Luis Cerezo
+
+control:
+
+	kualalumpurDTs::
+
+			actionsequence = ( unmount disable directories links shellcommands editfiles )
+unmount:
+	klnfs01_eth0:/swvg	
+				deletedir=false
+				force=true
+				deletefstab=true		
+	klnfs01_eth0:/datavg
+				deletedir=false
+				force=true
+				deletefstab=true		
+				
+disable:
+	/etc/init.d/nfsmnt
+	/etc/init.d/autoMapper
+	/users	type=link
+	/ftp	type=link
+	/html	type=link
+	/apps	type=link
+
+directories:
+
+	linux::
+		/localdb
+links:
+	linux::
+		/cm	->! /localdirect/cm
+		/cohdb	->! /localdirect/cohdb
+		/datadb ->! /localdirect/datadb
+		/navdb	->! /localdirect/navdb
+		/plots	->! /datadb/plots
+		/tps	->! /localdirect/tps
+		/group01 ->! /localdirect/group01	
+		/group02 ->! /localdirect/group02	
+		/group03 ->! /localdirect/group03	
+		/group04 ->! /localdirect/group04	
+		/group05 ->! /localdirect/group05	
+		/group06 ->! /localdirect/group06	
+		/group07 ->! /localdirect/group07	
+		/group08 ->! /localdirect/group08	
+		/group09 ->! /localdirect/group09	
+		/group10 ->! /localdirect/group10
+		/scratch ->! /localdirect/scratch
+		/scratch01 ->! /localdirect/scratch01
+		/pgs	   ->! /localdirect/pgs
+		/pgsdev	   ->! /localdirect/pgsdev
+
+#copy:
+#	linux::
+#		${configroot}/config/dion/cfagent
+#								dest=/etc/cron.d/cfagent
+#								server=${server}
+#								ignore=CVS
+#								backup=false
+#								mode=0755
+#								action=fix
+#
+
+editfiles:
+		
+	linux::
+	     {	/etc/sysctl.conf
+		AppendIfNoSuchLine "vm.min_free_kbytes = 8192"
+		DefineClasses "HUPsysctl"
+	     }
+	     {	/etc/yp.conf
+		EmptyEntireFilePlease
+		Backup "false"
+	     }
+shellcommands:
+
+	HUPsysctl::
+		"/sbin/sysctl -p"

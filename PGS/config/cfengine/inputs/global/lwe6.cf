@@ -1,0 +1,37 @@
+#stolen ^H^H^H^H borrowed from GCR
+
+control:
+	actionsequence		= ( packages copy shellcommands )
+	lwe6build		= ( 6.1.0.415 )
+	likewise_installer	= ( "LikewiseEnterprise-$(lwe6build)-linux-x86_64-rpm.sh" )
+	lweBinPath     		= ( /opt/likewise/bin )
+packages:
+
+	likewise-enterprise
+			version=0:6.1.0
+			cmp=ge
+			pkgmgr=rpm
+			elsedefine=needs_lwe6
+
+copy:
+    needs_lwe6::
+        ${configroot}/config/likewise/lwe$(lwe6build)/$(likewise_installer)	dest=/tmp/$(likewise_installer)
+									server=${server}
+									type=sum
+									mode=755
+
+
+shellcommands:
+    rejoin.servers|needs_lwe6.servers::
+        "/opt/likewise/bin/lwconfig gpagentautostart false"
+	"/tmp/$(likewise_installer) --target /tmp/ install"
+	"$(lweBinPath)/domainjoin-cli join --ou $(site)/Servers/Linux onshore.pgs.com hou-likewise_dirsvc Aq5BadEihO4ApaK"
+	"/bin/chmod 1777 /tmp"
+
+    rejoin.!servers|needs_lwe6.!servers::
+#	"/bin/sh -c 'cd /tmp/; wget ${rpm_base_url}/../likewise/${lwe6build}/${likewise_installer}' "
+	"/usr/sbin/authconfig --disablenis --update"
+	"/tmp/$(likewise_installer) --target /tmp/ install"
+        "/opt/likewise/bin/lwconfig gpagentautostart false"
+	"$(lweBinPath)/domainjoin-cli join --ou $(site)/Computers/Linux onshore.pgs.com hou-likewise_dirsvc Aq5BadEihO4ApaK"
+	"/bin/chmod 1777 /tmp"

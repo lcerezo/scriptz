@@ -1,0 +1,21 @@
+#check if krb5-workstationnuis installed and remove it.
+# 2006-03-21	| initial create | Luis E. Cerezo
+#
+
+control:
+	
+	actionsequence	= ( copy packages shellcommands )
+	Split		= ( | )
+
+	linux::
+	#rpm_bin	= ( /bin/rpm )
+	go_away_rpm = ( krb5-workstation )
+
+packages:
+	
+	krb5-workstation	pkgmgr=rpm define=has_krb5wrk
+
+shellcommands:
+
+	AllLinuxWorkstations.has_krb5wrk.!onshorecrew::
+		"$(rpm_bin) -e $(go_away_rpm)"

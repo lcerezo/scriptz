@@ -1,0 +1,4 @@
+users	-fstype=glusterfs	houglu.onshore.pgs.com:/users
+scratch	-fstype=glusterfs	houglu.onshore.pgs.com:/&
+tps	-fstype=glusterfs	houglu.onshore.pgs.com:/&
+

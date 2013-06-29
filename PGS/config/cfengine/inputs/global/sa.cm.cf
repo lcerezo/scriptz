@@ -1,0 +1,109 @@
+#stand-alone /cm
+#Create /cm dierctory structure on stand-alone machines
+# Jan 12, 2006 | Initial creation | Owen Morgan
+# Jan 23, 2006 | updated dirs list added actual files | Luis E. Cerezo
+control:
+
+	actionsequence = ( shellcommands directories links copy )
+        AddInstallable = ( failure )
+	IfElapsed	= ( 4000 ) 
+links:
+
+	sa.linux::
+		/cm ->! /local/cm	type=absolute
+		/cmlocal ->! /local/cmlocal	type=absolute
+		/datadb ->! /local/datadb	type=absolute
+		/etc/profile.d/cm.csh ->! /local/cm/login/cm.csh
+
+directories:
+	
+	sa.linux::
+		/local/cm
+		/local/cm/login
+		/local/cmlocal
+		/local/cm/production
+		/local/datadb
+
+copy:
+
+
+	sa.linux::
+			${configroot}/config/cm/r3.10LINUX/	dest=/local/cm/production/
+								server=${server}
+                                                                action=fix
+                                                                recurse=inf
+                                                                ignore=CVS
+                                                                backup=false
+								owner=pgsuser
+								group=6312		
+								mode=755
+								failover=failure
+                        ${configroot}/config/cm/cm-3.2.2        dest=/local/cm/cm-3.2.2
+                                                                server=${server}
+                                                                action=fix
+                                                                recurse=inf
+                                                                ignore=CVS
+                                                                backup=false
+                                                                owner=pgsuser
+                                                                group=6312
+                                                                mode=755
+                                                                failover=failure
+			${configroot}/config/cm/prerelease/     dest=/local/cm/prerelease/
+                                                                server=${server}
+                                                                action=fix
+                                                                recurse=inf
+                                                                ignore=CVS
+                                                                backup=false
+                                                                owner=pgsuser
+                                                                group=6312
+                                                                mode=755
+                                                                failover=failure
+								
+			${configroot}/config/cm/loginLINUX/	dest=/local/cm/login/
+								server=${server}
+                                                                action=fix
+                                                                recurse=inf
+                                                                ignore=CVS
+								backup=false
+								owner=pgsuser
+                                                                group=6312
+                                                                mode=755
+								failover=failure
+        failure.sa.linux::
+                        ${configroot}/config/cm/r3.10LINUX   dest=/local/cm/production/
+                                                                server=${catchall_server}
+                                                                action=fix
+                                                                recurse=inf
+                                                                ignore=CVS
+                                                                backup=false
+                                                                owner=pgsuser
+                                                                group=6312
+                                                                mode=755
+                        ${configroot}/config/cm/cm-3.2.2        dest=/local/cm/cm-3.2.2
+                                                                server=${server}
+                                                                action=fix
+                                                                recurse=inf
+                                                                ignore=CVS
+                                                                backup=false
+                                                                owner=pgsuser
+                                                                group=6312
+                                                                mode=755
+                        ${configroot}/config/cm/prerelease/     dest=/local/cm/prerelease/
+                                                                server=${catchall_server}
+                                                                action=fix
+                                                                recurse=inf
+                                                                ignore=CVS
+                                                                backup=false
+                                                                owner=pgsuser
+                                                                group=6312
+                                                                mode=755
+
+                        ${configroot}/config/cm/LOGINlinux   dest=/local/cm/login/
+                                                                server=${catchall_server}
+                                                                action=fix
+                                                                recurse=inf
+                                                                ignore=CVS
+                                                                backup=false
+                                                                owner=pgsuser
+                                                                group=6312
+                                                                mode=755

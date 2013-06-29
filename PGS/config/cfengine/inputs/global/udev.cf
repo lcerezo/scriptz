@@ -1,0 +1,27 @@
+#changes the perms for devices
+#
+# Jun 12, 2006	| Initial Create 	| Luis Cerezo
+# May 6, 2008	| Now with more work!   | Dino Yancey
+
+control:
+	actionsequence = ( editfiles shellcommands )
+
+	AllLinuxWorkstations::
+			
+			editfiles:
+				el4::
+				{ /etc/udev/permissions.d/50-udev.permissions
+				 ReplaceAll "ttyS\*\:root\:uucp\:0660" With "ttyS*:root:uucp:0666" }
+				el5::
+				{ /etc/udev/rules.d/50-udev.rules
+				BeginGroupIfLineMatching "^.*tty\[A-Z\]\*.*660.*$"
+                        	ReplaceLineWith "KERNEL==\"tty[A-Z]*\", NAME=\"%k\", GROUP=\"uucp\", MODE=\"0666\""
+				DefineInGroup "udevreload"
+                        	EndGroup
+				}
+
+			shellcommands:
+
+				udevreload::
+
+					"/sbin/udevcontrol reload_rules" useshell=false

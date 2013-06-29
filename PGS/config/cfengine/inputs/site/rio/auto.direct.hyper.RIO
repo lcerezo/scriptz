@@ -1,0 +1,11 @@
+#/datadb xcat.hyper.rio.compute.pgs.com:/datadb
+/datadb rnfs01.rio.compute.pgs.com:/vol/datadb
+/apps rnfs02.rio.compute.pgs.com:/vol/apps
+/cm rnfs02.rio.compute.pgs.com:/vol/cm
+/users rnfs02.rio.compute.pgs.com:/vol/users
+/hypdata -fstype=panfs,rw,iscsi-sock-rsize=131072 panfs://rpan04.rio.compute.pgs.com/
+/cfs4 -fstype=panfs,rw panfs://rpan04.rio.compute.pgs.com/
+/cfs2 rpan02.rio.compute.pgs.com:/cfs
+/cfs5 rpan05.rio.compute.pgs.com:/
+/cfs7 rpan07.rio.compute.pgs.com:/
+/pgs rnfs02.rio.compute.pgs.com:/vol/pgs

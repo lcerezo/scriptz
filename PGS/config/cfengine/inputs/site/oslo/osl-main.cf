@@ -1,0 +1,14 @@
+groups:
+
+	reservior = ( FileExists(/etc/pgs/reservoir) )
+
+import:
+
+	reservior::
+		site/oslo/reservoir.cf
+	osloDP::
+		site/oslo/autofs.cf
+	OSL.!servers::
+		global/ifcfg-eth_edits.cf
+	EMprocessing::
+		global/nucleus.cf

@@ -1,0 +1,14 @@
+control:
+
+        actionsequence  = ( packages shellcommands )
+
+packages:
+	AllLinuxWorkstations.KUL::
+
+        	nedit  pkgmgr=rpm elsedefine=needs_nedit
+
+shellcommands:
+
+        needs_nedit::
+                "${yum_bin} -y --enablerepo=epel --disablerepo=rpmforge install nedit"
+

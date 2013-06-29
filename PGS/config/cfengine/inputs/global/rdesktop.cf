@@ -1,0 +1,17 @@
+control:
+
+        actionsequence  = ( packages shellcommands )
+
+packages:
+	AllLinuxWorkstations::
+
+		rdesktop	version=0:1.7.0-1
+				cmp=eq
+				pkgmgr=rpm
+				elsedefine=update_rdesktop
+
+shellcommands:
+
+        update_rdesktop::
+            #    "${yum_bin} -y --disablerepo=epel --disablerepo=rpmforge install rdesktop" ifelapsed=600
+		 "${rpm_bin} -Uvh $(rpms_base_url)/rdesktop-1.7.0-1.x86_64.rpm" ifelapsed=1800

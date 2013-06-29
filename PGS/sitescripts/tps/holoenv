@@ -1,0 +1,29 @@
+#holoSeis script to start with correct binary and arguments
+#Owen Morgan Apr 22 2005
+#Version 1.2
+
+#Check for the -v switch and set VFLAG and get the FILENAME, otherwise just get the FILENAME
+  
+#Set the operating system type and then set the correct holoSeis root directory
+#and the library path (Library path used except on Linux i386 at the moment)
+
+set AAAA = `uname -p`
+
+switch ($AAAA) 
+	case 'i686': 
+		set OPER=Linux
+		breaksw
+	case 'x86_64': 
+		set OPER=Linux64
+		breaksw
+	case 'mips':
+		set OPER=IRIX
+		breaksw
+	case 'powerpc': 
+		set OPER=Darwin
+		breaksw
+endsw
+
+set HOLOSEIS_ROOT_DIR=/tps/holoSeis/$OPER
+set LD_LIBRARY_PATH=$HOLOSEIS_ROOT_DIR/lib:${LD_LIBRARY_PATH}
+

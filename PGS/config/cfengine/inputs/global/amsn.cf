@@ -1,0 +1,14 @@
+control:
+
+        actionsequence  = ( packages shellcommands )
+
+packages:
+	AllLinuxWorkstations.!el6::
+
+        	amsn  pkgmgr=rpm elsedefine=needs_amsn
+
+shellcommands:
+
+        needs_amsn::
+                "${yum_bin} -y install amsn*"
+

@@ -1,0 +1,29 @@
+#this is a basic package add.  Very straightforward and easy.  - DCY
+
+control:
+
+        actionsequence  = ( packages shellcommands )
+
+packages:
+	linux::
+
+        	aspell-no  	pkgmgr=rpm 
+				cmp=ge
+				elsedefine=needs_LANG_NO
+
+        	fonts-chinese  	pkgmgr=rpm 
+				cmp=ge
+				elsedefine=needs_LANG_CN
+
+        	fonts-japanese 	pkgmgr=rpm 
+				cmp=ge
+				elsedefine=needs_LANG_JP
+
+shellcommands:
+
+        needs_LANG_NO::
+		        "${yum_bin} -y groupinstall norwegian-support"
+        needs_LANG_CN::
+		        "${yum_bin} -y groupinstall chinese-support"
+        needs_LANG_JP::
+		        "${yum_bin} -y groupinstall japanese-support"

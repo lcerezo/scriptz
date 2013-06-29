@@ -1,0 +1,12 @@
+
+control:
+
+	actionsequence = ( packages shellcommands )
+
+packages:
+	KUL.!servers::
+                k3b        pkgmgr=rpm elsedefine=needs_k3b
+
+shellcommands:
+	KUL.!servers.needs_k3b::
+		"${yum_bin} -y install k3b k3b-extras"

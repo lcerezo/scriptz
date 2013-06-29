@@ -1,0 +1,37 @@
+#Policy to enable logging of cfengine outputs and errors via mysql
+#since smtp relaying from userland is disabled
+
+control:
+
+	actionsequence = ( editfiles copy )
+	AddInstallable = ( failure )
+
+editfiles:
+
+	{ /etc/cron.d/cfagent
+		 Backup "false"
+		 GotoLastLine
+		 AppendToLineIfNotContains "v 2>&1 | /usr/sbin/cfoutput.sh"
+	}
+
+copy:
+
+	linux::
+               ${configroot}/config/cfengine/inputs/global/cfgfiles/cfoutput.sh dest=/usr/sbin/cfoutput.sh
+                                                                                ignore=CVS
+                                                                                server=${server}
+                                                                                backup=false
+                                                                                mode=0750
+                                                                                owner=root
+                                                                                group=root
+                                                                                failover=failure
+                                                                                type=sum
+        linux.failure::
+               ${configroot}/config/cfengine/inputs/global/cfgfiles/cfoutput.sh dest=/usr/sbin/cfoutput.sh
+                                                                                ignore=CVS
+                                                                                server=${catchall_server}
+                                                                                backup=false
+                                                                                mode=0750
+                                                                                owner=root
+                                                                                group=root
+                                                                                type=sum

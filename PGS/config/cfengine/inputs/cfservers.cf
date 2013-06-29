@@ -1,0 +1,43 @@
+
+control:
+
+	actionsequence = ( directories links shellcommands copy processes shellcommands )
+	
+		directories:
+			cfservers::
+	
+					/data/cfengine	
+							owner=root
+							group=root
+							mode=755
+							define=needs_cfservd
+		links:
+			cfservers::
+					/cfengine ->! /data/cfengine
+
+
+
+
+		copy:
+			cfservers::
+			  	${configroot}/config/repos.conf					dest=/etc/httpd/conf.d/
+                                                                                		server=${server}
+                                                                               			type=sum
+                                                                            			mode=755
+												define=HUPhttpd
+	        processes:
+			cfservers::
+
+                		"httpd"
+                        		restart "/etc/init.d/httpd restart"
+
+		import:
+
+			cfservers::
+				cvs.cf
+				rsync.cf
+				global/cfprocs.cf
+		shellcommands:
+			
+				HUPhttpd::
+					"/etc/init.d/httpd reload"

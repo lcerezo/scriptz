@@ -1,0 +1,25 @@
+control:
+        actionsequence = ( packages shellcommands )
+        split = ( + )
+groups:
+        cvs_up =  ( FileExists(/cfengine/config) )
+
+packages:
+	
+	cfservers::
+		
+			cvs 
+			pkgmgr=rpm
+			elsedefine=needs_cvs
+shellcommands:
+
+	needs_cvs::
+		"${yum_bin} -y install cvs"
+
+        cfservers.!cvs_up::
+                "/bin/sh -c 'cd /cfengine; /usr/bin/cvs -d :pserver:anonymous@pinky.onshore.pgs.com:/data/cvs/cfengine/ co config' "
+                noabspath=true
+
+        cfservers.cvs_up::
+                "/bin/sh -c 'cd /cfengine; /usr/bin/cvs -d :pserver:anonymous@pinky.onshore.pgs.com:/data/cvs/cfengine/ update -d' "
+                noabspath=true

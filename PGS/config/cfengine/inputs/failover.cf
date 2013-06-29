@@ -1,0 +1,113 @@
+#group definitions moved to groups.cf
+control:
+	AllowRedefinitionOf = ( catchall_server )
+
+strategies:
+NSA::
+        { failover_strategy_HOU
+                fail_to_london: "10"
+                fail_to_oslo: "5"
+                fail_to_perth: "3"
+                fail_to_kl: "1"
+        }
+
+APAC::
+        { failover_strategy_KUL
+
+                fail_to_perth: "10"
+                fail_to_london: "5"
+                fail_to_oslo: "3"
+                fail_to_houston: "1"
+        }
+
+
+EAME::
+        { failover_strategy_LON
+
+                fail_to_oslo: "10"
+                fail_to_houston: "5"
+                fail_to_perth: "3"
+                fail_to_kl: "1"
+        }
+
+
+NULL::
+        { failover_strategy_NULL
+
+                fail_to_houston: "1"
+                fail_to_london: "1"
+                fail_to_kl: "1"
+                fail_to_oslo: "1"
+        }
+
+control:
+#failover for Houston, Austin, Rio
+	fail_to_london::
+       		catchall_server = ( 10.21.24.152 )
+	fail_to_oslo::
+        	catchall_server = ( 10.30.24.8 )
+	fail_to_perth::
+	      catchall_server = ( 157.147.224.49 )
+	fail_to_kl::
+	       catchall_server = ( 10.26.16.15 )
+	fail_to_houston::
+        	catchall_server = ( 10.20.24.83 )
+#(LON|ABZ).fail_to_perth::
+
+##failover for London
+#(LON|ABZ).fail_to_oslo::
+#        catchall_server = ( 10.30.24.8 )
+#        catchall_server = ( 157.147.224.49 )
+#(LON|ABZ).fail_to_kl::
+#        catchall_server = ( 10.26.16.15 )
+#
+##failover for Perth
+#PER.fail_to_kl::
+#        catchall_server = ( 10.26.16.15 )
+#PER.fail_to_london::
+#        catchall_server = ( 10.21.24.152 )
+#PER.fail_to_houston::
+#        catchall_server = ( 10.20.24.83 )
+#PER.fail_to_oslo::
+#        catchall_server = ( 10.30.24.8 )
+#
+##failover for Oslo
+#OSL.fail_to_london::
+#        catchall_server = ( 10.21.24.152 )
+#OSL.fail_to_houston::
+#        catchall_server = ( 10.20.24.83 )
+#OSL.fail_to_kl::
+#        catchall_server = ( 10.26.16.15 )
+#OSL.fail_to_perth::
+#        catchall_server = ( 157.147.224.49 )
+#
+##failover for KL
+#(SIN|KUL).fail_to_perth::
+#        catchall_server = ( 157.147.224.49 )
+#(SIN|KUL).fail_to_london::
+#        catchall_server = ( 10.21.24.152 )
+#(SIN|KUL).fail_to_oslo::
+#        catchall_server = ( 10.30.24.8 )
+#(SIN|KUL).fail_to_houston::
+#        catchall_server = ( 10.20.24.83 )
+#
+##failover for villahermosa
+#VH.fail_to_houston::
+#        catchall_server = ( 10.20.24.83 )
+#VH.fail_to_london::
+#        catchall_server = ( 10.21.24.152 )
+#VH.fail_to_perth::
+#        catchall_server = ( 157.147.224.49 )
+#VH.fail_to_kl::
+#        catchall_server = ( 10.26.16.15 )
+#
+#
+##Failover for NULL, the undefined site, just major site cfservers.
+#NULL.fail_to_houston::
+#        catchall_server = ( 10.20.24.83 )
+#NULL.fail_to_london::
+#        catchall_server = ( 10.21.24.152 )
+#NULL.fail_to_kl::
+#        catchall_server = ( 10.26.16.15 )
+#NULL.fail_to_oslo::
+#        catchall_server = ( 10.30.24.8 )

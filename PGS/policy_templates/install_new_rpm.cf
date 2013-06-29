@@ -1,0 +1,19 @@
+control:
+
+        actionsequence  = ( packages shellcommands )
+
+packages:
+	WHAT_CLASS_SHOULD_INSTALL_THIS::
+
+        	RPM_NAME  	pkgmgr=rpm 
+				cmp=ge
+				version=THIS_IS_FROM_RPM-qi
+				elsedefine=needs_RPM_NAME
+
+shellcommands:
+
+        needs_RPM_NAME::
+        
+		        "${yum_bin} -y update RPM_NAME"
+			#OR LOCAL
+			"$(rpm_bin) -Uvh $(rpms_base_url)/PATH_TO_RPM_ON_CFREPO_SERVER"

@@ -1,0 +1,26 @@
+#check if rhn-applet is installed and remove it.
+# 2006-01-11	| initial create | Luis E. Cerezo
+#
+
+control:
+	
+	actionsequence	= ( copy packages shellcommands )
+	Split		= ( | )
+
+	linux::
+	#rpm_bin	= ( /bin/rpm )
+	rhnapp_rpm = ( rhn-applet )
+
+packages:
+	
+	rhn-applet	pkgmgr=rpm define=has_rhn_applet
+	pirut		pkgmgr=rpm define=has_pirut
+
+shellcommands:
+
+	AllLinuxWorkstations.has_rhn_applet::
+		"$(rpm_bin) -e $(rhnapp_rpm)"
+				ifelapsed=900
+	AllLinuxWorkstations.has_pirut::
+		"$(rpm_bin) -e pirut"
+				ifelapsed=900

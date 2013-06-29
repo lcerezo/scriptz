@@ -1,0 +1,16 @@
+control:
+
+        actionsequence  = ( packages shellcommands )
+
+packages:
+        AllLinuxWorkstations::
+
+                vlc  pkgmgr=rpm elsedefine=needs_vlc
+
+shellcommands:
+
+        needs_vlc.!el6::
+                "${yum_bin} -y --enablerepo=rpmforge32 install vlc.i386"
+
+        needs_vlc.el6::
+                "${yum_bin} -y install vlc"

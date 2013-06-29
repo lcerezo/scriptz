@@ -1,0 +1,43 @@
+proj               hbeamstackera:/proj
+hdata1              hbeamviewera:/hdata1
+hdata2              hbeamviewera:/hdata2
+
+0000          hbeama000:/hbeama0000
+0001          hbeama000:/hbeama0001
+0002          hbeama000:/hbeama0002
+
+0010          hbeama001:/hbeama0010
+0011          hbeama001:/hbeama0011
+0012          hbeama001:/hbeama0012
+                                  
+0020          hbeama002:/hbeama0020
+0021          hbeama002:/hbeama0021
+0022          hbeama002:/hbeama0022
+                                  
+0030          hbeama003:/hbeama0030
+0031          hbeama003:/hbeama0031
+0032          hbeama003:/hbeama0032
+                                  
+0040          hbeama004:/hbeama0040
+0041          hbeama004:/hbeama0041
+0042          hbeama004:/hbeama0042
+                                  
+0050          hbeama005:/hbeama0050
+0051          hbeama005:/hbeama0051
+0052          hbeama005:/hbeama0052
+                                  
+0060          hbeama006:/hbeama0060
+0061          hbeama006:/hbeama0061
+0062          hbeama006:/hbeama0062
+                                  
+0070          hbeama007:/hbeama0070
+0071          hbeama007:/hbeama0071
+0072          hbeama007:/hbeama0072
+                                  
+0080          hbeama008:/hbeama0080
+0081          hbeama008:/hbeama0081
+0082          hbeama008:/hbeama0082
+                                  
+0090          hbeama009:/hbeama0090
+0091          hbeama009:/hbeama0091
+0092          hbeama009:/hbeama0092

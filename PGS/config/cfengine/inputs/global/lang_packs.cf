@@ -1,0 +1,44 @@
+control:
+
+        actionsequence  = ( packages shellcommands )
+
+packages:
+	linux.!el6::
+
+        	aspell-no  	pkgmgr=rpm 
+				cmp=ge
+				elsedefine=needs_LANG_NO
+
+        	fonts-chinese  	pkgmgr=rpm 
+				cmp=ge
+				elsedefine=needs_LANG_CN
+
+        	fonts-japanese 	pkgmgr=rpm 
+				cmp=ge
+				elsedefine=needs_LANG_JP
+
+#optional lang packages are different in el6
+	linux.el6::
+
+        	hunspell-nb  	pkgmgr=rpm 
+				cmp=ge
+				elsedefine=needs_LANG_NO
+
+        	ibus-pinyin	pkgmgr=rpm 
+				cmp=ge
+				elsedefine=needs_LANG_CN
+
+        	ibus-anthy 	pkgmgr=rpm 
+				cmp=ge
+				elsedefine=needs_LANG_JP
+
+shellcommands:
+
+shellcommands:
+
+        needs_LANG_NO::
+		        "${yum_bin} -y groupinstall norwegian-support"
+        needs_LANG_CN::
+		        "${yum_bin} -y groupinstall chinese-support"
+        needs_LANG_JP::
+		        "${yum_bin} -y groupinstall japanese-support"

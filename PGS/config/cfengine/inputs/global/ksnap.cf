@@ -1,0 +1,11 @@
+#show ksnapshot in GNOME, per request by Razali in KL
+control:
+        actionsequence = ( editfiles )
+
+
+        editfiles:
+
+                el5.AllLinuxWorkstations::
+                        { /usr/share/applications/kde/ksnapshot.desktop
+                        DeleteLinesMatching      "OnlyShowIn=KDE;"
+                        }

@@ -1,0 +1,28 @@
+
+control:
+	
+	actionsequence = ( directories shellcommands )
+
+groups:
+	fullsync = ( FileExists(/etc/allreposPGS) loncf21 oslcf21 )
+directories:
+
+		cfservers.!pinky::
+				
+				/data/cfengine/repos/
+							mode=775
+							owner=root
+							
+shellcommands:
+
+		Friday.Hr23.cfservers.!pinky::
+			"/usr/bin/rsync -pav --exclude=inputs --exclude=TODOLIST --exclude=CVS pinky.onshore.pgs.com::cfengine /data/cfengine"
+			"/usr/bin/rsync --delete -pav --exclude=legacy pinky.onshore.pgs.com::pgs_git/post /data/cfengine/repos"
+		Friday.Hr23.fullsync::
+			"/usr/bin/rsync -a pinky.onshore.pgs.com::pgs_git/distros/centos/6 /data/repos/distros/centos/"
+		Friday.Hr23.repo_server::
+			"/usr/bin/rsync -a pinky.onshore.pgs.com::pgs_git/distros/centos/5.5/os /data/repos/distros/centos/5.5/"
+			"/usr/bin/rsync -pav --exclude=SRPMS pinky.onshore.pgs.com::pgs_git/distros/centos/5.5/updates /data/repos/distros/centos/5.5/"
+			"/usr/bin/rsync -a pinky.onshore.pgs.com::pgs_git/distros/centos/5.4/os /data/repos/distros/centos/5.4/"
+		Saturday.Hr23.vilcf20::
+			"/usr/bin/rsync -pav pinky.onshore.pgs.com::holoSeis_internal /data/tps/holoSeis"

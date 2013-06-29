@@ -1,0 +1,7 @@
+
+actionsequence = ( files )
+
+files:
+	ABD::
+
+		/tmp/foo	mode=0644 fixall

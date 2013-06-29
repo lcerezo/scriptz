@@ -1,0 +1,17 @@
+control:
+	actionsequence = ( editfiles shellcommands )
+
+editfiles:
+	LEI::
+		{ /etc/auto.pgs
+			CommentLinesStarting "/users"
+			DefineInGroup		"HUP_autofs"
+		}
+
+shellcommands:
+	
+		HUP_autofs::
+
+				"/sbin/service autofs reload"
+								ifelapsed=900
+

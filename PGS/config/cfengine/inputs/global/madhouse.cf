@@ -1,0 +1,21 @@
+control:
+
+	actionsequence = ( processes shellcommands )
+KUL::        
+	sysadm         = ( vincent.chan@pgs.com )
+
+processes:
+
+	madhouse::
+			"ypbind"
+				elsedefine=getNISy
+
+shellcommands:
+
+	!cfservers.getNISy.KUL::
+			"/usr/sbin/authconfig --enablenis --nisdomain=kua.pgs.com --updateall"
+			"/sbin/service autofs restart"
+
+	gitNISy.HOU.GCR::	
+			"/usr/sbin/authconfig --enablenis --nisdomain=houston.pgs.com --updateall"
+			"/sbin/service autofs restart"

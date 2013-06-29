@@ -1,0 +1,12 @@
+control:
+	actionsequence = ( files )
+
+import:
+	site/rio/links.cf	
+	site/rio/autofs.cf
+
+files:
+	
+	/etc/pgs_ssl	
+			mode=755
+			action=create

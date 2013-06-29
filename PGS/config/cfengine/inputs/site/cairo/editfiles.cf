@@ -1,0 +1,8 @@
+editfiles:
+
+	CAI::
+		{	/etc/fstab
+			CommentLinesStarting    "canfs"
+                  }
+
+

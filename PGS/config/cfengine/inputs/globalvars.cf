@@ -1,0 +1,12 @@
+control:
+	rpms_base_url = ( http://$(server)/repos/post/post-install-rpms/ )
+	AddInstallable = ( failure )
+	IfElasped	= ( 120 )
+	AllowRedefinitionOf = ( smtpserver )
+	smtpserver     = ( 10.20.24.83 )
+	EmailMaxLines  = ( 450 )
+	EmailFrom  	= ( cfengine@pgs.com )
+	AllowRedefinitionOf = ( RPMInstallCommand )
+
+servers::
+	sysadm	       = ( Global-IT-LinuxAdmins@pgs.com )

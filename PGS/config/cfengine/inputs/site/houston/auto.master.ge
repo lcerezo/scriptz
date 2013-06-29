@@ -1,0 +1,10 @@
+/misc		/etc/auto.misc
+/net		/etc/auto.net
+/cfsglobal 	/etc/autofs_pgs/auto.cfsglobal
+/Memorial 	/etc/autofs_pgs/auto.memorial
+/datadb 	/etc/autofs_pgs/auto.datadb nfsver=3
+/cfsdev 	/etc/autofs_pgs/auto.cfsdev
+/lobby 		/etc/autofs_pgs/auto.lobby
+/stratusdata 		/etc/autofs_pgs/auto.data
+/-		/etc/autofs_pgs/auto.direct
+/gfs 		/etc/autofs_pgs/auto.gfs

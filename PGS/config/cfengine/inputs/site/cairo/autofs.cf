@@ -1,0 +1,73 @@
+control:
+	actionsequence = ( copy shellcommands )
+
+
+copy:
+
+	CAI::
+
+		${configroot}/config/cfengine/inputs/site/${site}/auto.master.${site}	dest=/etc/auto.master
+									server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        failover=failure
+									define=HUP_autofs
+
+		${configroot}/config/cfengine/inputs/site/${site}/auto.direct.${site}	dest=/etc/auto.direct
+									server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        failover=failure
+									define=HUP_autofs
+	CAI.hyperbeam::
+        	${configroot}/config/cfengine/inputs/site/${site}/auto.direct.hyper.${site}   dest=/etc/auto.direct
+                                                                        server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        failover=failure
+                                                                        define=HUP_autofs
+
+
+
+	CAI.failure::
+
+		${configroot}/config/cfengine/inputs/site/${site}/auto.master.${site}      dest=/etc/auto.master
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+									define=HUP_autofs
+
+
+
+		${configroot}/config/cfengine/inputs/site/${site}/auto.direct.${site}      dest=/etc/auto.direct
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+									define=HUP_autofs
+	CAI.hyperbeam.failure::
+                ${configroot}/config/cfengine/inputs/site/${site}/auto.direct.hyper.${site}      dest=/etc/auto.direct
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        define=HUP_autofs
+
+
+shellcommands:
+	
+		HUP_autofs::
+
+				"/sbin/service autofs reload"	ifelapsed=900
+				"/sbin/chkconfig autofs on"	ifelapsed=7200
+							

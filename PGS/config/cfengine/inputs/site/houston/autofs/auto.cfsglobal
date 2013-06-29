@@ -1,0 +1,11 @@
+cfs01 -rsize=65535,wsize=65535  hpanfs01.hou.compute.pgs.com:/
+cfs02 -rsize=65535,wsize=65535  hpanfs02.hou.compute.pgs.com:/
+cfs03 -rsize=65535,wsize=65535  hpanfs03.hou.compute.pgs.com:/
+cfs04 -rsize=65535,wsize=65535  hpanfs04.hou.compute.pgs.com:/
+cfs05 -rsize=65535,wsize=65535  hpanfs05.hou.compute.pgs.com:/
+cfs07 -rsize=65535,wsize=65535  hpanfs07.hou.compute.pgs.com:/
+cfs08 -rsize=65535,wsize=65535  hpanfs08.hou.compute.pgs.com:/
+cfs09 -rsize=65535,wsize=65535  hpanfs09.hou.compute.pgs.com:/
+cfs10 -rsize=65535,wsize=65535  hpanfs10.hou.compute.pgs.com:/
+cfs11 -rsize=65535,wsize=65535  hpanfs11.hou.compute.pgs.com:/
+cfs12 -rsize=65535,wsize=65535  hpanfs12.hou.compute.pgs.com:/

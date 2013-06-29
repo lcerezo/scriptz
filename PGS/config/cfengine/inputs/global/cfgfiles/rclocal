@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+# This script will be executed *after* all the other init scripts.
+# You can put your own initialization stuff in here if you don't
+# want to do the full Sys V style init stuff.
+#
+# !!!!!!! This file is CFEngine managed. !!!!!!!
+
+touch /var/lock/subsys/local
+if [ -f /etc/nv ]; then
+        exit
+else
+	if [[ ! -e /tmp/nvidia-current.sh || ! -s /tmp/nvidia-current.sh ]]; then
+		wget -T 10 -t 5 -O /tmp/nvidia-current.sh http://${server}/repos/post/drivers/Nvidia/x86_64/${nv_version}
+		if [ "$?" -ne "0" ]; then
+			wget -T 10 -t 5 -O /tmp/nvidia-current.sh http://${catchall_server}/repos/post/drivers/Nvidia/x86_64/${nv_version}
+		fi
+	fi
+	if [ "$?" -ne "0" ]; then
+		echo "Could not download NVIDIA driver from ${server} or ${catchall_server}!"
+		exit 1
+	fi
+        chmod 777 /tmp/nvidia-current.sh
+        /tmp/nvidia-current.sh -s
+	vidcount=`/usr/bin/nvidia-xconfig --query-gpu-info | grep GPUs | awk {'print $4'}`
+	if [ "$vidcount" -ge "2" ]; then
+        	/usr/bin/nvidia-xconfig --twinview --enable-all-gpus --xinerama
+	else
+		/usr/bin/nvidia-xconfig --twinview --enable-all-gpus
+	fi
+	rm /tmp/nvidia-current.sh
+        touch /etc/nv
+fi
+/bin/chmod ugo+wr /dev/ttyS0

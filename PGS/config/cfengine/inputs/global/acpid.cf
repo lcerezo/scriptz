@@ -1,0 +1,8 @@
+control:
+	actionsequence = ( processes )
+
+		processes:
+				"/usr/sbin/acpid"		
+					restart "/sbin/service acpid start"
+					ifelapsed=300
+				

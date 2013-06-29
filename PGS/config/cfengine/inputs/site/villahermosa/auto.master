@@ -1,0 +1,5 @@
+/misc		/etc/auto.misc
+/net		/etc/auto.net
++auto.master
+/data		/etc/autofs_pgs/auto.data
+/- 		/etc/autofs_pgs/auto.direct

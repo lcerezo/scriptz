@@ -1,0 +1,18 @@
+control:
+	actionsequence = ( disable )
+
+
+disable:
+
+	RIO.AllLinuxWorkstations|servers::
+
+		/datadb type=link
+		/apps type=link
+		/cm type=link
+		/users type=link
+		/cfs1 type=link
+		/cfs2 type=link
+		/cfs3 type=link
+		/cfs4 type=link
+		/cfs5 type=link
+		/cfs6 type=link

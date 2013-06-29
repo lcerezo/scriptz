@@ -1,0 +1,55 @@
+#install adobe
+# 2006-02-07	| initial create | Luis E. Cerezo
+# 2006-03-17	| added updates for removing old versions and upgrade to 7.0.5 | Luis E. Cerezo
+
+control:
+	
+	actionsequence	= ( packages shellcommands files )
+	Split		= ( | )
+	acro_rpms_base_url	= ( http://$(server)/repos/post/post-install-rpms/acroread/ )
+
+	linux::
+	#rpm_bin	= ( /bin/rpm )
+	acro_rpm = ( AdobeReader_enu-8.1.2-1.i486.rpm )
+
+packages:
+	
+	AdobeReader_enu		version=8.1.2 
+				cmp=ge 
+				pkgmgr=rpm 
+				elsedefine=needs_acro
+   el6::
+	mesa-libGL.i686		
+				cmp=ge 
+				pkgmgr=rpm 
+				elsedefine=needs_libGL_32bit
+	mesa-libGLU.i686		
+				cmp=ge 
+				pkgmgr=rpm 
+				elsedefine=needs_libGLU_32bit
+
+
+
+shellcommands:
+
+	kill_oldacro::
+		"$(rpm_bin) -e mozilla-acroread acroread"
+	has_acro::
+		"$(rpm_bin) -e AdobeReader_enu"
+	needs_acro::
+		"$(rpm_bin) -Uvh $(acro_rpms_base_url)$(acro_rpm)"
+	needs_libGL_32bit::
+		"${yum_bin} -y install mesa-libGL.i686"	
+	needs_libGLU_32bit::
+		"${yum_bin} -y install mesa-libGLU.i686"	
+files:
+	
+	linux::
+		/usr/share/	mode=755
+				action=fixall
+				recurse=inf
+				xdev=true
+	
+		/usr/lib/mozilla/plugins/nppdf.so
+				mode=755
+				action=fixall

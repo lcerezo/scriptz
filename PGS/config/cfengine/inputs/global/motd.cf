@@ -1,0 +1,68 @@
+#motd config	
+#alters and displays the motd
+# Jan 9, 2005 | Initial Creation | Luis E. Cerezo
+
+control:
+	actionsequence = ( editfiles copy links )
+        AddInstallable = ( failure )
+	
+
+	editfiles:
+		
+		linux::
+			{ /etc/profile.d/colorls.csh
+			DeleteLinesMatching      "cat /etc/motd"
+			DeleteLinesMatching	 "more /etc/motd"
+			}
+		holoupdaters::
+			{ /etc/motd
+			EmptyEntireFilePlease
+			Backup "single"
+			}
+			{ /etc/issue
+			EmptyEntireFilePlease
+			Backup "single"
+			}
+
+	copy:
+		glusterStorageServers::
+		
+	        ${configroot}/config/motd/motd.gluster          dest=/etc/motd
+                                                                server=${server}
+                                                                owner=root
+                                                                group=root
+                                                                mode=0644
+                                                                type=sum
+								failover=failure
+                glusterStorageServers.failure::
+
+                ${configroot}/config/motd/motd.gluster          dest=/etc/motd
+                                                                server=${catchall_server}
+                                                                owner=root
+                                                                group=root
+                                                                mode=0644
+                                                                type=sum
+		!glusterStorageServers.!sa.!holoupdaters::
+		
+	        ${configroot}/config/motd/motd                  dest=/etc/motd
+                                                                server=${server}
+                                                                owner=root
+                                                                group=root
+                                                                mode=0644
+                                                                type=sum
+								failover=failure
+                !glusterStorageServers.!sa.!holoupdaters.failure::
+
+                ${configroot}/config/motd/motd                  dest=/etc/motd
+                                                                server=${catchall_server}
+                                                                owner=root
+                                                                group=root
+                                                                mode=0644
+                                                                type=sum
+
+	links:
+	
+		sa::
+		
+		/etc/motd	->!	/etc/issue	type=absolute
+

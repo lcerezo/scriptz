@@ -1,0 +1,20 @@
+control:
+        actionsequence = ( copy )
+        AddInstallable = (failure )
+
+copy:
+        AllLinuxWorkstations.linux::
+        ${configroot}/config/desktop/fc3.applications.menu              dest=/etc/xdg/menus/applications.menu
+                                                                        server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        failover=failure
+        failure::
+        ${configroot}/config/desktop/fc3.applications.menu              dest=/etc/xdg/menus/applications.menu
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum

@@ -1,0 +1,31 @@
+[PGS-c5-media]
+name=CentOS-$releasever - Media
+baseurl=http://oslcf21.onshore.pgs.com/repos/distros/centos/$releasever/os/x86_64/
+gpgcheck=1
+enabled=1
+priority=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-5
+
+#released updates
+[PGS-update]
+name=CentOS-$releasever - Updates
+baseurl=http://oslcf21.onshore.pgs.com/repos/distros/centos/$releasever/updates/x86_64/
+gpgcheck=1
+gpgkey=http://mirror.centos.org/centos/RPM-GPG-KEY-centos5
+priority=1
+
+#packages used/produced in the build but not released
+[PGS-addons]
+name=CentOS-$releasever - Addons
+baseurl=http://oslcf21.onshore.pgs.com/repos/distros/centos/$releasever/addons/$basearch/
+gpgcheck=1
+gpgkey=http://mirror.centos.org/centos/RPM-GPG-KEY-centos5
+priority=1
+
+#additional packages that may be useful
+[PGS-extras]
+name=CentOS-$releasever - Extras
+baseurl=http://oslcf21.onshore.pgs.com/repos/distros/centos/$releasever/extras/$basearch/
+gpgcheck=1
+gpgkey=http://mirror.centos.org/centos/RPM-GPG-KEY-centos5
+priority=1

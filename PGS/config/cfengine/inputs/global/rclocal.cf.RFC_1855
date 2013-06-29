@@ -1,0 +1,46 @@
+#Verbal approval for testing by LEC.
+
+control:
+	actionsequence = ( copy editfiles editfiles.secondpass )
+	AddInstallable = ( failure )
+	
+	!nv_bleeding::
+		nv_version = ( current )
+	nv_bleeding::
+		nv_version =  ( bleeding )
+
+copy:
+
+	HOU.el5.!servers::
+		${configroot}/config/cfengine/inputs/global/cfgfiles/rclocal	dest=/tmp/rclocal
+										ignore=CVS
+										server=${server}
+										backup=false
+										mode=0755
+										owner=root
+										group=root
+										failover=failure
+										type=sum
+	(HOU.el5.!servers).failure::
+                ${configroot}/config/cfengine/inputs/global/cfgfiles/rclocal    dest=/tmp/rclocal
+                                                                                ignore=CVS
+                                                                                server=${catchall_server}
+                                                                                backup=false
+                                                                                mode=0755
+                                                                                owner=root
+                                                                                group=root
+                                                                                type=sum
+editfiles:
+	nv_bleeding::
+		{ /etc/nv_b
+			AutoCreate
+		}	
+editfiles:
+	secondpass.Wednesday.Hr17::
+		{ /etc/rc.d/rc.local
+			EmptyEntireFilePlease
+			InsertFile "/tmp/rclocal"
+			ExpandVariables "true"
+			Backup "single"
+			
+		}

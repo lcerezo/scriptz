@@ -1,0 +1,37 @@
+/ags hnfs01.hou.compute.pgs.com:/vol/ags
+/appsdev hnfs01.hou.compute.pgs.com:/vol/appsdev
+/apps                     houfs32:/apps
+/cfs01 -fstype=panfs,rw panfs://hpanfs01.hou.compute.pgs.com/
+/cfs01Panfs -fstype=panfs,rw panfs://hpanfs01/
+/cfs02 -fstype=panfs,rw panfs://hpanfs02.hou.compute.pgs.com/
+/cfs03 -fstype=panfs,rw panfs://hpanfs03.hou.compute.pgs.com/
+/cfs04 -fstype=panfs,rw panfs://hpanfs04.hou.compute.pgs.com/
+/cfs05 -fstype=panfs,rw panfs://hpanfs05.hou.compute.pgs.com/
+/cfs06 -fstype=panfs,rw panfs://hpanfs06.hou.compute.pgs.com/
+/cfs07 -fstype=panfs,rw panfs://hpanfs07.hou.compute.pgs.com/
+/cfs08 -fstype=panfs,rw panfs://hpanfs08.hou.compute.pgs.com/
+/cfs09 -fstype=panfs,rw panfs://hpanfs09.hou.compute.pgs.com/
+/cfs10 -fstype=panfs,rw panfs://hpanfs10.hou.compute.pgs.com/
+/cfs11 -fstype=panfs,rw panfs://hpanfs11.hou.compute.pgs.com/
+/cfs12 -fstype=panfs,rw panfs://hpanfs12.hou.compute.pgs.com/
+/cmdev hnfs01.hou.compute.pgs.com:/vol/cmdev
+/cm hnfs02.hou.compute.pgs.com:/vol/cm
+/hypdata1 hyper998.hou.compute.pgs.com:/scratch/&
+/hypdata2 hyper998.hou.compute.pgs.com:/hypdata2
+/hypdata3 hyper998.hou.compute.pgs.com:/hypdata3
+/hypdata4 hyper998.hou.compute.pgs.com:/hypdata4
+/hypdata5 hyper998.hou.compute.pgs.com:/hypdata5
+/hypdata -fstype=panfs,rw panfs://hypercfs.hou.compute.pgs.com/hypdata
+/mde		hnfs01.hou.compute.pgs.com:/vol/mde
+/ning1                    houfs32:/ning1
+/ning2                    houfs32:/ning2
+/pan10 hpanfs10.hou.compute.pgs.com:/pan10
+/pgsdev hnfs01.hou.compute.pgs.com:/vol/pgsdev
+/pgs hnfs01.hou.compute.pgs.com:/vol/pgs
+/PGSLibs hnfs01.hou.compute.pgs.com:/vol/PGSLibs
+/proj -noac,rw hyper999.hou.compute.pgs.com:/scratch/&
+/scratch-HOU houfs28a.onshore.pgs.com:/san/scratch
+/tps -fstype=glusterfs houglu.onshore.pgs.com:/tps
+/users -fstype=glusterfs houglu.onshore.pgs.com:/users
+/vgdata2                  houfs32:/vgdata2
+/vgdata                   houfs32:/vgdata

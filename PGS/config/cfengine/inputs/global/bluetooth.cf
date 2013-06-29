@@ -1,0 +1,20 @@
+#turns off bluetooth for desktop systems
+#turns off bluetooth and disables it at start.
+# Jan 25, 2006 | Initial Creation | Luis E. Cerezo
+
+
+control:
+	actionsequence = ( processes shellcommands )
+
+
+		shellcommands:
+			
+			AllLinuxWorkstations|memdhcp.linux::	
+				
+				"/sbin/chkconfig --list bluetooth | grep :on "	useshell=true
+										define=bluetooth_chkconfig_off
+				
+			bluetooth_chkconfig_off::
+	
+				"/sbin/chkconfig bluetooth off"	useshell=false
+				

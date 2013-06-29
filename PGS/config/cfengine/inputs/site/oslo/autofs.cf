@@ -1,0 +1,73 @@
+control:
+	actionsequence = ( copy shellcommands )
+
+
+copy:
+
+	OSL::
+		${configroot}/config/cfengine/inputs/site/${site}/auto.master.OSL	dest=/etc/auto.master
+									server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        failover=failure
+									define=HUP_autofs
+
+	OSL.failure::
+
+		${configroot}/config/cfengine/inputs/site/${site}/auto.master.OSL      dest=/etc/auto.master
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+									define=HUP_autofs
+
+
+	OSL::
+		${configroot}/config/cfengine/inputs/site/${site}/auto.direct.OSL	dest=/etc/auto.direct
+									server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        failover=failure
+									define=HUP_autofs
+
+	OSL.failure::
+
+		${configroot}/config/cfengine/inputs/site/${site}/auto.direct.OSL      dest=/etc/auto.direct
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+									define=HUP_autofs
+
+	OSL::
+		${configroot}/config/cfengine/inputs/site/${site}/auto.users.OSL	dest=/etc/auto.users
+									server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        failover=failure
+									define=HUP_autofs
+
+	OSL.failure::
+
+		${configroot}/config/cfengine/inputs/site/${site}/auto.users.OSL      dest=/etc/auto.users
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+									define=HUP_autofs
+
+shellcommands:
+	
+		HUP_autofs::
+
+				"/sbin/service autofs reload"
+								ifelapsed=900

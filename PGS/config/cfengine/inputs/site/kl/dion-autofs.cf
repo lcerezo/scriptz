@@ -1,0 +1,70 @@
+control:
+	actionsequence = ( copy shellcommands )
+
+
+copy:
+
+	KUL::
+		${configroot}/config/cfengine/inputs/site/kl/auto.master-dion	dest=/etc/auto.master
+									server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        failover=failure
+									define=HUP_autofs
+
+	KUL.failure::
+
+		${configroot}/config/cfengine/inputs/site/kl/auto.master-dion      dest=/etc/auto.master
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+									define=HUP_autofs
+
+	KUL::
+		${configroot}/config/cfengine/inputs/site/kl/auto.local-dion	dest=/etc/auto.local
+									server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        failover=failure
+									define=HUP_autofs
+
+	KUL.failure::
+
+		${configroot}/config/cfengine/inputs/site/kl/auto.local-dion      dest=/etc/auto.local
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+									define=HUP_autofs
+	KUL::
+		${configroot}/config/cfengine/inputs/site/kl/auto.home-dion	dest=/etc/auto.home
+									server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        failover=failure
+									define=HUP_autofs
+
+	KUL.failure::
+
+		${configroot}/config/cfengine/inputs/site/kl/auto.home-dion      dest=/etc/auto.home
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+									define=HUP_autofs
+shellcommands:
+	
+		HUP_autofs::
+
+				"/sbin/service autofs reload"
+								ifelapsed=900

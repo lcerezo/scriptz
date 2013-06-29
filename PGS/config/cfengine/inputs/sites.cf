@@ -1,0 +1,61 @@
+control:
+	AUS|HOU::
+		site = ( "houston" ) 
+	ALM::
+		site = ( "almaty" )
+	KUL::
+		site = ( "kuala\ lumpur" ) 
+	LON::
+		site = ( "london" ) 
+	LEI::
+		site = ( "leiden" )
+	MUM::
+		site = ( "mumbai" ) 
+	OSL::
+		site = ( "oslo" ) 
+	PER::
+		site = ( "perth" ) 
+	RIO::
+		site = ( "rio" ) 
+	ABZ::
+		site = ( "aberdeen" )
+	VH::
+		site = ( "villahermosa" )
+	SIN::
+		site = ( "singapore" )
+	CAI::
+		site = ( "cairo" )
+	NULL::
+		site = ( "NULL" )
+import:
+
+
+		AUS|HOU::
+			site/${site}/hou-main.cf
+		ALM::
+			site/${site}/main.cf
+		CAI::
+			site/${site}/${site}-main.cf
+		SIN::
+			site/${site}/sin-main.cf
+		KUL::
+			site/kl/kul-main.cf
+		LON::
+			site/london/lon-main.cf
+		LEI::
+			site/${site}/${site}-main.cf
+		MUM::
+			site/mumbai/mum-main.cf
+		OSL::
+			site/oslo/osl-main.cf
+		PER::
+			site/perth/per-main.cf
+		RIO::
+			site/rio/rio-main.cf
+		ABZ:: 
+			site/aberdeen/abd-main.cf
+		VH:: 
+			site/villahermosa/vil-main.cf
+		onshorecrew::
+			site/onshore/onshore-main.cf
+		

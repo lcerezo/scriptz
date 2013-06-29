@@ -1,0 +1,13 @@
+control:
+	actionsequence = ( files editfiles )
+        AddInstallable = (failure )
+
+files:
+
+	/etc/ssh/ssh_known_hosts			mode=0544
+
+editfiles:
+
+	{ /etc/rc.local
+	AppendIfNoSuchLine "/sbin/modprobe nvidia"
+	}

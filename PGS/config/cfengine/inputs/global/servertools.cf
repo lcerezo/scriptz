@@ -1,0 +1,20 @@
+
+control:
+	RPMInstallCommand 	= ( "/usr/bin/yum -y -d 0 -e 0 install %s " )
+	actionsequence		= ( packages )
+	
+
+packages:
+
+	cvs		pkgmgr=rpm cmp=ge action=install
+	dstat		pkgmgr=rpm cmp=ge action=install
+	e4fsprogs	pkgmgr=rpm cmp=ge action=install
+	iftop		pkgmgr=rpm cmp=ge action=install
+	iperf		pkgmgr=rpm cmp=ge action=install
+	screen		pkgmgr=rpm cmp=ge action=install
+	net-snmp	pkgmgr=rpm cmp=ge action=install
+	nmap		pkgmgr=rpm cmp=ge action=install
+	sysstat		pkgmgr=rpm cmp=ge action=install
+	vim-enhanced	pkgmgr=rpm cmp=ge action=install
+	virt-what	pkgmgr=rpm cmp=ge action=install
+	wireshark	pkgmgr=rpm cmp=ge action=install

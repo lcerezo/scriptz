@@ -1,0 +1,65 @@
+#ssh keys for known hosts.
+#adds the keys for known ssh hosts so that the user does not have to type yes
+# Jan 9, 2005 | Initial Creation | Luis E. Cerezo
+
+control:
+	actionsequence = ( copy editfiles )
+	AddInstallable = ( failure )
+	
+
+	editfiles:
+		
+		HOU.linux::
+
+			        { /etc/ssh/ssh_known_hosts
+				AppendIfNoSuchLine      "plotgirl,10.20.24.57 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAIEA2yT2wPaW8y9KtJNa6fva9KoIFytwWlOslpKz06YhdHwD59ZBgBpAopCEirF7PWf7FUq2oU+/jevBP52lZ161zQvbLaI9LbwPxDh8j+SogOR+4eFOktj9IXfFEunZ1ducHZeNt7L/b3TNPe5mx/W/KTdGXBBpor0z8XJROFYb3uU="
+				AutoCreate
+				}
+copy:
+
+	hyperbeam::
+
+			${configroot}/config/cfengine/inputs/site/${site}/ssh_config.hyperbeam	dest=/etc/ssh/ssh_config
+											ignore=CVS
+											server=${server}
+											backup=false
+											action=fix
+											mode=0644
+											owner=root
+											group=root
+											failover=failure
+											define=HUP_sshd
+											type=sum
+                        ${configroot}/config/cfengine/inputs/global/cfgfiles/beamoper_rsa       dest=/etc/ssh/beamoper_rsa
+                                                                                        ignore=CVS
+                                                                                        server=${server}
+                                                                                        backup=false
+											action=fix
+                                                                                        mode=0644
+                                                                                        owner=root
+                                                                                        group=root
+                                                                                        failover=failure
+											define=HUP_sshd
+                                                                                        type=sum
+	hyperbeam.failure::
+
+                        ${configroot}/config/cfengine/inputs/site/${site}/ssh_config.hyperbeam       dest=/etc/ssh/ssh_config
+                                                                                        ignore=CVS
+                                                                                        server=${catchall_server}
+                                                                                        backup=false
+											action=fix
+                                                                                        mode=0644
+                                                                                        owner=root
+                                                                                        group=root
+											define=HUP_sshd
+                                                                                        type=sum
+                        ${configroot}/config/cfengine/inputs/global/cfgfiles/beamoper_rsa       dest=/etc/ssh/beamoper_rsa
+                                                                                        ignore=CVS
+                                                                                        server=${catchall_server}
+                                                                                        backup=false
+											action=fix
+                                                                                        mode=0644
+                                                                                        owner=root
+                                                                                        group=root
+											define=HUP_sshd
+                                                                                        type=sum

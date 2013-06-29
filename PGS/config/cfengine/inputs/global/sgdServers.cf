@@ -1,0 +1,14 @@
+control:
+	actionsequence = ( directories links )
+
+directories:
+
+	SGD_Servers::
+			/data
+				mode=777
+
+links:
+
+	SGD_Servers::
+			
+			/local ->! /data

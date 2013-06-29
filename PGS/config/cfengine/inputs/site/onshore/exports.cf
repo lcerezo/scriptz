@@ -1,0 +1,147 @@
+control:
+	actionsequence = ( editfiles )
+
+editfiles:
+
+##########################################################-7x-machines-############################################################################################
+	onshorecrew.pgslnx72::
+		{ /etc/exports
+		AppendIfNoSuchLine "/pgslnx72/export/d01 *(rw)"
+		AppendIfNoSuchLine "/pgslnx72/export/d02 *(rw)"
+		AppendIfNoSuchLine "/pgslnx72/export/d03 *(rw)"
+		}
+
+		{ /etc/auto.master
+                AppendIfNoSuchLine "/pgslnx71/export    /etc/auto.pgslnx71"
+                AppendIfNoSuchLine "/pgswin71    /etc/auto.pgswin71"
+                }
+
+		{ /etc/auto.pgslnx71
+		AutoCreate
+		AppendIfNoSuchLine "d01 pgslnx71:/pgslnx71/export/d01"
+		#AppendIfNoSuchLine "d02 pgslnx71:/pgslnx71/export/d02"
+		}
+	
+                { /etc/auto.pgswin71
+                AutoCreate
+                AppendIfNoSuchLine "d -fstype=smbfs,rw,username=administrator,password=system,workgroup=WORKGROUP,uid=500,gid=100,fmask=664,dmask=775 ://pgswin71/d"
+                }
+
+        onshorecrew.pgslnx71::
+                { /etc/exports
+                AppendIfNoSuchLine "/pgslnx71/export/d01 *(rw)"
+                #AppendIfNoSuchLine "/pgslnx71/export/d02 *(rw)"
+                }
+
+                { /etc/auto.master
+                AppendIfNoSuchLine "/pgslnx72/export    /etc/auto.pgslnx72"
+                AppendIfNoSuchLine "/pgswin71    /etc/auto.pgswin71"
+                }
+
+                { /etc/auto.pgslnx72
+                AutoCreate
+                AppendIfNoSuchLine "d01 pgslnx72:/pgslnx72/export/d01"
+                AppendIfNoSuchLine "d02 pgslnx72:/pgslnx72/export/d02"
+                AppendIfNoSuchLine "d03 pgslnx72:/pgslnx72/export/d03"
+                }
+
+                { /etc/auto.pgswin71
+                AutoCreate
+                AppendIfNoSuchLine "d -fstype=smbfs,rw,username=administrator,password=system,workgroup=WORKGROUP,uid=500,gid=100,fmask=664,dmask=775 ://pgswin71/d"
+                }
+
+##########################################################-8x-machines-############################################################################################
+        onshorecrew.pgslnx82::
+                { /etc/exports
+                AppendIfNoSuchLine "/pgslnx82/export/d01 *(rw)"
+                AppendIfNoSuchLine "/pgslnx82/export/d02 *(rw)"
+                AppendIfNoSuchLine "/pgslnx82/export/d03 *(rw)"
+                }
+
+                { /etc/auto.master
+                AppendIfNoSuchLine "/pgslnx82/export    /etc/auto.pgslnx82"
+                AppendIfNoSuchLine "/pgswin81    /etc/auto.pgswin81"
+                }
+
+                { /etc/auto.pgslnx81
+                AutoCreate
+                AppendIfNoSuchLine "d01 pgslnx81:/pgslnx81/export/d01"
+                }
+
+                { /etc/auto.pgswin81
+                AutoCreate
+                AppendIfNoSuchLine "D -fstype=smbfs,rw,username=administrator,password=system,workgroup=WORKGROUP,uid=500,gid=100,fmask=664,dmask=775 ://pgswin81/D"
+                }
+
+
+        onshorecrew.pgslnx81::
+                { /etc/exports
+                AppendIfNoSuchLine "/pgslnx81/export/d01 *(rw)"
+                }
+
+                { /etc/auto.master
+                AppendIfNoSuchLine "/pgslnx82/export    /etc/auto.pgslnx81"
+                AppendIfNoSuchLine "/pgswin81    /etc/auto.pgswin81"
+                }
+
+                { /etc/auto.pgslnx82
+                AutoCreate
+                AppendIfNoSuchLine "d01 pgslnx82:/pgslnx82/export/d01"
+                AppendIfNoSuchLine "d02 pgslnx82:/pgslnx82/export/d02"
+                AppendIfNoSuchLine "d03 pgslnx82:/pgslnx82/export/d03"
+                }
+
+                { /etc/auto.pgswin81
+                AutoCreate
+                AppendIfNoSuchLine "D -fstype=smbfs,rw,username=administrator,password=system,workgroup=WORKGROUP,uid=500,gid=100,fmask=664,dmask=775 ://pgswin81/D"
+                }
+
+##########################################################-9x-machines-############################################################################################
+        onshorecrew.pgslnx92::
+                { /etc/exports
+                AppendIfNoSuchLine "/pgslnx92/export/d01 *(rw)"
+                AppendIfNoSuchLine "/pgslnx92/export/d02 *(rw)"
+                AppendIfNoSuchLine "/pgslnx92/export/d03 *(rw)"
+		AppendIfNoSuchLine "/pgslnx92/export/d04 *(rw)"
+		AppendIfNoSuchLine "/pgslnx92/export/d05 *(rw)"
+                }
+
+                { /etc/auto.master
+                AppendIfNoSuchLine "/pgslnx91/export    /etc/auto.pgslnx91"
+                AppendIfNoSuchLine "/pgswin91    /etc/auto.pgswin91"
+                }
+
+                { /etc/auto.pgslnx91
+                AutoCreate
+                AppendIfNoSuchLine "d01 pgslnx91:/pgslnx91/export/d01"
+                }
+
+                { /etc/auto.pgswin91
+                AutoCreate
+                AppendIfNoSuchLine "D -fstype=smbfs,rw,username=administrator,password=system,workgroup=WORKGROUP,uid=500,gid=100,fmask=664,dmask=775 ://pgswin91/D"
+                }
+        onshorecrew.pgslnx91::
+                { /etc/exports
+                AppendIfNoSuchLine "/pgslnx91/export/d01 *(rw)"
+                }
+
+                { /etc/auto.master
+                AppendIfNoSuchLine "/pgslnx92/export    /etc/auto.pgslnx92"
+                AppendIfNoSuchLine "/pgswin91    /etc/auto.pgswin91"
+                }
+
+                { /etc/auto.pgslnx92
+                AutoCreate
+                AppendIfNoSuchLine "d01 pgslnx92:/pgslnx92/export/d01"
+                AppendIfNoSuchLine "d02 pgslnx92:/pgslnx92/export/d02"
+                AppendIfNoSuchLine "d03 pgslnx92:/pgslnx92/export/d03"
+                AppendIfNoSuchLine "d04 pgslnx92:/pgslnx92/export/d04"
+                AppendIfNoSuchLine "d05 pgslnx92:/pgslnx92/export/d05"
+                }
+
+                { /etc/auto.pgswin91
+                AutoCreate
+                AppendIfNoSuchLine "D -fstype=smbfs,rw,username=administrator,password=system,workgroup=WORKGROUP,uid=500,gid=100,fmask=664,dmask=775 ://pgswin91/D"
+                }
+
+

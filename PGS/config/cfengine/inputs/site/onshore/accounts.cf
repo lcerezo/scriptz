@@ -1,0 +1,10 @@
+control:
+	actionsequence = ( shellcommands )
+
+shellcommands:
+
+	onshorecrew::
+		"/usr/sbin/useradd -s /bin/csh -g users -d /home/prouser -p '$1$h.B/1fbz$0DzkquJgi3itrCf8mOJj91' prouser"
+		"/usr/sbin/useradd -s /bin/csh -g users -d /home/qc1 -p '$1$h.B/1fbz$0DzkquJgi3itrCf8mOJj91' qc1"
+		"/usr/sbin/useradd -s /bin/csh -g users -d /home/qc2 -p '$1$h.B/1fbz$0DzkquJgi3itrCf8mOJj91' qc2"
+		"/usr/sbin/useradd -s /bin/csh -g users -d /home/sdiuser -p '$1$h.B/1fbz$0DzkquJgi3itrCf8mOJj91' sdiuser"

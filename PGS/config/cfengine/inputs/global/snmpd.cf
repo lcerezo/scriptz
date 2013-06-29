@@ -1,0 +1,52 @@
+#snmpd config
+#configures snmpd with a community of "pgsnet"
+# Aug 13, 2007 | Initial Creation | DCY
+
+control:
+	actionsequence = (  packages shellcommands copy )
+        AddInstallable = ( failure )
+	
+
+		packages:
+
+			HouTerminalServers|(AllLinuxWorkstations.HOU)|servers::
+
+				net-snmp		pkgmgr=rpm
+							elsedefine=needs_snmp
+			
+	
+		copy:
+		
+       			HouTerminalServers|linux:: 
+		
+						${configroot}/config/snmpd/snmpd.conf                      dest=/etc/snmp/snmpd.conf
+        		                       				                                server=${server}
+                        		                                			        owner=root
+                                        		         			                group=root
+                                                        					        mode=0644
+                                                    							type=sum
+													define=HUP_snmpd
+													failover=failure
+                        failure::
+
+                                                ${configroot}/config/snmpd/snmpd.conf                      dest=/etc/snmp/snmpd.conf
+                                                                                                        server=${catchall_server}
+                                                                                                        owner=root
+                                                                                                        group=root
+                                                                                                        mode=0644
+                                                                                                        type=sum
+                                                                                                        define=HUP_snmpd
+
+
+	shellcommands:
+
+		linux.HUP_snmpd::
+
+			"/sbin/service snmpd restart"	useshell=false
+			"/sbin/chkconfig snmpd on"	useshell=false
+
+		needs_snmp::
+
+			"${yum_bin} -y install net-snmp" useshell=false
+			"/sbin/chkconfig snmpd on"
+			"/sbin/service snmpd start"

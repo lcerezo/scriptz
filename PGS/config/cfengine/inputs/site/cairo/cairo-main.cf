@@ -1,0 +1,4 @@
+import:
+
+	site/${site}/autofs.cf
+	site/${site}/editfiles.cf

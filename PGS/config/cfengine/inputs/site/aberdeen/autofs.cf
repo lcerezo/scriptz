@@ -1,0 +1,59 @@
+
+control:
+
+	actionsequence = ( copy shellcommands )
+
+copy:
+       ABZ::
+                ${configroot}/config/cfengine/inputs/site/aberdeen/auto.master    dest=/etc/auto.master
+                                                                        server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        ignore=CVS
+                                                                        backup=false
+                                                                        define=HUPautofs
+                                                                        failover=failure
+
+        ABZ.failure::
+
+                ${configroot}/config/cfengine/inputs/site/aberdeen/auto.master      dest=/etc/auto.master
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        define=HUPautofs
+
+
+       ABZ::
+                ${configroot}/config/cfengine/inputs/site/aberdeen/auto.abz       dest=/etc/autofs_pgs/auto.direct
+                                                                        server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+									ignore=CVS
+									backup=false	
+									define=HUPautofs
+                                                                        failover=failure
+
+        ABZ.failure::
+
+                ${configroot}/config/cfengine/inputs/site/aberdeen/auto.abz      dest=/etc/autofs_pgs/auto.direct
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+									define=HUPautofs
+
+	shellcommands:
+
+		HUPautofs::
+			
+			"/sbin/service autofs reload" useshell=false
+
+
+

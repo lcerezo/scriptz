@@ -1,0 +1,66 @@
+#ssh/sshfd config changes
+#alters the autofs daemon to show all the contents of the auto-mntd fs, before it is mounted, ala - sun
+# Jan 9, 2005 | Initial Creation | Luis E. Cerezo
+
+	control:
+
+	actionsequence = ( processes packages editfiles shellcommands disable )
+	split = ( | )	
+
+	processes:
+	
+		AllLinuxWorkstations::
+			"automount"
+				restart "/sbin/service autofs start"
+	editfiles:
+		
+		linux::
+			
+			{ /etc/sysconfig/autofs
+			ReplaceAll 'DAEMONOPTIONS="--timeout=60"' With 'DAEMONOPTIONS="--timeout=60 --ghost"'
+			}
+
+			{ /etc/auto.master
+			SetCommentStart "#"
+			BeginGroupIfLineContaining "#/net"
+				UnCommentLinesContaining "/net"
+				DefineInGroup "HUPautofs"
+			EndGroup	
+			}
+		el5::
+
+			{ /etc/sysconfig/autofs
+                        CommentLinesMatching "DEFAULT_BROWSE_MODE=\"no\""
+			CommentLinesMatching "BROWSE_MODE=\"no\""
+                        }
+
+		el6::
+
+			{ /etc/sysconfig/autofs
+			SetCommentStart "#"
+			CommentLinesMatching "BROWSE_MODE=\"no\""
+			CommentLinesContaining "MOUNT_NFS_DEFAULT_PROTOCOL=4"
+			UnCommentLinesContaining "MOUNT_NFS_DEFAULT_PROTOCOL=3"
+                        }
+	packages:
+	
+		el5::	
+			autofs		pkgmgr=rpm
+					cmp=gt
+					version=1:5.0.1-0.rc2.55.el5.3
+					elsedefine=needs_autofs5
+
+	shellcommands:
+
+	el5.needs_autofs5::
+
+			"${rpm_bin} --import http://mirrors.easynews.com/linux/centos/RPM-GPG-KEY-CentOS-5"
+			"${yum_bin} -y update autofs kernel*" 
+		HUPautofs::
+
+			"/sbin/service autofs reload" useshell=false
+		
+	disable:
+
+		AllLinuxWorkstations.needs_autofs5::
+			/etc/nv

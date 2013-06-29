@@ -1,0 +1,242 @@
+	control:
+	
+		actionsequence = ( copy shellcommands )
+		AddInstallable = ( failure )
+		
+	copy:
+
+##
+##copy all the maps over to new dir
+##shouldnt be a need to key this on certain classes anymore
+	HOU::
+                ${configroot}/config/cfengine/inputs/site/houston/autofs       dest=/etc/autofs_pgs/
+                                                                        server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        recurse=inf
+									ignore=CVS
+									backup=false	
+                                                                        define=HUPautofs
+                                                                        failover=failure 
+	HOU.failure::
+                ${configroot}/config/cfengine/inputs/site/houston/autofs       dest=/etc/autofs_pgs/
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+									backup=false	
+									ignore=CVS
+                                                                        recurse=inf
+                                                                        define=HUPautofs
+###auto direct maps fir HYPERBEAM machines
+
+        HOU.hyperbeam::
+                ${configroot}/config/cfengine/inputs/site/houston/auto.direct.hyperBeam        dest=/etc/autofs_pgs/auto.direct
+                                                                        server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        recurse=inf
+									backup=false	
+                                                                        define=HUPautofs
+                                                                        failover=failure
+        HOU.hyperbeam.failure::
+                ${configroot}/config/cfengine/inputs/site/houston/auto.direct.hyperBeam        dest=/etc/autofs_pgs/auto.direct
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        recurse=inf
+									backup=false	
+                                                                        define=HUPautofs
+###auto direct maps for the /- for PT
+
+        HOU.GandE::
+                ${configroot}/config/cfengine/inputs/site/houston/auto.direct.pt        dest=/etc/autofs_pgs/auto.direct
+                                                                        server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        recurse=inf
+									backup=false	
+                                                                        define=HUPautofs
+                                                                        failover=failure
+        HOU.GandE.failure::
+                ${configroot}/config/cfengine/inputs/site/houston/auto.direct.pt        dest=/etc/autofs_pgs/auto.direct
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        recurse=inf
+									backup=false	
+                                                                        define=HUPautofs
+### ./- for normal non PT users, regular lwe users, but not AGS folks.
+        HOU.!GandE.!ags.!hyperbeam::
+                ${configroot}/config/cfengine/inputs/site/houston/auto.direct.notpt   dest=/etc/autofs_pgs/auto.direct
+                                                                        server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+									backup=false	
+                                                                        recurse=inf
+                                                                        define=HUPautofs
+                                                                        failover=failure
+
+        HOU.!GandE.!ags.!hyperbeam.failure::
+                ${configroot}/config/cfengine/inputs/site/houston/auto.direct.notpt   dest=/etc/autofs_pgs/auto.direct
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+									backup=false	
+                                                                        recurse=inf
+                                                                        define=HUPautofs
+
+	HOU.!GandE.!depth::
+                ${configroot}/config/cfengine/inputs/site/houston/auto.master       dest=/etc/auto.master
+                                                                        server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        define=HUPautofs
+									failover=failure
+									backup=false	
+        (HOU.!GandE.!depth).failure::
+
+                ${configroot}/config/cfengine/inputs/site/houston/auto.master     dest=/etc/auto.master
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+									ignore=CVS
+									type=sum
+									backup=false	
+									define=HUPautofs
+        HOU.GandE::
+                ${configroot}/config/cfengine/inputs/site/houston/auto.master.ge       dest=/etc/auto.master
+                                                                        server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        define=HUPautofs
+									backup=false	
+                                                                        failover=failure
+
+        HOU.GandE.failure::
+
+                ${configroot}/config/cfengine/inputs/site/houston/auto.master.ge     dest=/etc/auto.master
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        ignore=CVS
+                                                                        type=sum
+									backup=false	
+                                                                        define=HUPautofs
+        GandE.HOU::
+                ${configroot}/config/cfengine/inputs/site/houston/auto.geHOU       dest=/etc/autofs_pgs/auto.ge
+                                                                        server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+									ignore=CVS
+									backup=false	
+                                                                        failover=failure
+
+        GandE.HOU.failure::
+
+                ${configroot}/config/cfengine/inputs/site/houston/auto.geHOU      dest=/etc/autofs_pgs/auto.ge
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+#AGS folks / Depth processing / Beam Folks need these mounts.
+        HOU.depth::
+                ${configroot}/config/cfengine/inputs/site/houston/auto.master.depth       dest=/etc/auto.master
+                                                                        server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        define=HUPautofs
+                                                                        backup=false
+                                                                        failover=failure
+
+        HOU.depth.failure::
+
+                ${configroot}/config/cfengine/inputs/site/houston/auto.master.depth     dest=/etc/auto.master
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        ignore=CVS
+                                                                        type=sum
+                                                                        backup=false
+                                                                        define=HUPautofs
+
+#        glusterfsClients::
+#                ${configroot}/config/cfengine/inputs/site/houston/auto.master.gluster       dest=/etc/auto.master
+#                                                                        server=${server}
+#                                                                        owner=root
+#                                                                        group=root
+#                                                                        mode=0644
+#                                                                        type=sum
+#                                                                        define=HUPautofs
+#                                                                        backup=false
+#                                                                        failover=failure
+#
+#                ${configroot}/config/cfengine/inputs/site/houston/auto.direct.gluster   dest=/etc/autofs_pgs/auto.direct
+#                                                                        server=${server}
+#                                                                        owner=root
+#                                                                        group=root
+#                                                                        mode=0644
+#                                                                        type=sum
+#									backup=false	
+#                                                                        recurse=inf
+#                                                                        define=HUPautofs
+#
+#        glusterfsClients.failure::
+#
+#                ${configroot}/config/cfengine/inputs/site/houston/auto.master.gluster     dest=/etc/auto.master
+#                                                                        server=${catchall_server}
+#                                                                        owner=root
+#                                                                        group=root
+#                                                                        mode=0644
+#                                                                        ignore=CVS
+#                                                                        type=sum
+#                                                                        backup=false
+#                                                                        define=HUPautofs
+#
+#        
+#                ${configroot}/config/cfengine/inputs/site/houston/auto.direct.gluster   dest=/etc/autofs_pgs/auto.direct
+#                                                                        server=${server}
+#                                                                        owner=root
+#                                                                        group=root
+#                                                                        mode=0644
+#                                                                        type=sum
+#									backup=false	
+#                                                                        recurse=inf
+#                                                                        define=HUPautofs
+#
+#
+		
+	shellcommands:
+
+		HUPautofs::
+			
+			"/sbin/service autofs reload" useshell=false
+
+

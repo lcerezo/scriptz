@@ -1,0 +1,286 @@
+control:
+
+        actionsequence = ( copy editfiles shellcommands )
+        AddInstallable = ( failure )
+HOU::
+        ks_base_url     = ( http://pinky.onshore.pgs.com/repos/ks/kickstart.php?hostname= )
+LON::
+        ks_base_url     = ( http://loncf21.onshore.pgs.com/repos/ks/kickstart.php?hostname= )
+
+OSL::
+        ks_base_url     = ( http://oslwb20.onshore.pgs.com/repos/ks/kickstart.php?hostname= )
+
+KUL::
+        ks_base_url     = ( http://kualincf20.onshore.pgs.com/repos/ks/kickstart.php?hostname= )
+         
+PER::
+        ks_base_url     = ( http://percf20.onshore.pgs.com/repos/ks/kickstart.php?hostname= )
+         
+                   copy:
+#############################################CENTOS4##############################################
+                        x86_64.centos_4.!upgrademe::
+
+                                ${configroot}/config/ks/x86_64.vmlinuz
+
+                                                                        dest=/boot/vmlinuz
+                                                                        server=${server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+                                                                        failover=failure
+
+                                ${configroot}/config/ks/x86_64.initrd.img
+
+                                                                        dest=/boot/initrd.img
+                                                                        server=${server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+                                                                        failover=failure
+
+
+
+                        i686.centos_4.!upgrademe::
+
+                                ${configroot}/config/ks/i686.vmlinuz.c4_4
+
+                                                                        dest=/boot/vmlinuz
+                                                                        server=${server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+                                                                        failover=failure
+
+                                ${configroot}/config/ks/i686.initrd.img.c4_4
+
+                                                                        dest=/boot/initrd.img
+                                                                        server=${server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+                                                                        failover=failure
+                        failure.x86_64.centos_4.!upgrademe::
+
+                                ${configroot}/config/ks/x86_64.vmlinuz
+
+                                                                        dest=/boot/vmlinuz
+                                                                        server=${catchall_server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+
+                                ${configroot}/config/ks/x86_64.initrd.img
+
+                                                                        dest=/boot/initrd.img
+                                                                        server=${catchall_server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+
+
+
+
+                        failure.i686.centos_4.!upgrademe::
+
+                                ${configroot}/config/ks/i686.vmlinuz.c4_4
+
+                                                                        dest=/boot/vmlinuz
+                                                                        server=${catchall_server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+
+                                ${configroot}/config/ks/i686.initrd.img.c4_4
+
+                                                                        dest=/boot/initrd.img
+                                                                        server=${catchall_server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+#############################################CENTOS5##############################################
+                       x86_64.centos_5.!upgrademe::
+
+                                ${configroot}/config/ks/x86_64.vmlinuz_c55
+
+                                                                        dest=/boot/vmlinuz
+                                                                        server=${server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+                                                                        failover=failure
+
+                                ${configroot}/config/ks/x86_64.initrd.img_c55
+
+                                                                        dest=/boot/initrd.img
+                                                                        server=${server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+                                                                        failover=failure
+
+
+
+                        i686.centos_5.!upgrademe::
+
+                                ${configroot}/config/ks/i686.vmlinuz.c5_2
+
+                                                                        dest=/boot/vmlinuz
+                                                                        server=${server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+                                                                        failover=failure
+
+                                ${configroot}/config/ks/i686.initrd.img.c5_2
+
+                                                                        dest=/boot/initrd.img
+                                                                        server=${server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+                                                                        failover=failure
+                        failure.x86_64.centos_5.!upgrademe::
+
+                                ${configroot}/config/ks/x86_64.vmlinuz_el52
+
+                                                                        dest=/boot/vmlinuz
+                                                                        server=${catchall_server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+
+                                ${configroot}/config/ks/x86_64.initrd.img_el52
+
+                                                                        dest=/boot/initrd.img
+                                                                        server=${catchall_server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+
+
+
+
+                        failure.i686.centos_5.!upgrademe::
+
+                                ${configroot}/config/ks/i686.vmlinuz.c5_2
+
+                                                                        dest=/boot/vmlinuz
+                                                                        server=${catchall_server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+
+                                ${configroot}/config/ks/i686.initrd.img.c5_2
+
+                                                                        dest=/boot/initrd.img
+                                                                        server=${catchall_server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+
+#############################################CENTOS4to5#use 'cfagent -Dks -Dupgrademe'###############
+                       x86_64.centos_4.upgrademe::
+
+                                ${configroot}/config/ks/x86_64.vmlinuz_el5
+
+                                                                        dest=/boot/vmlinuz
+                                                                        server=${server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+                                                                        failover=failure
+
+                                ${configroot}/config/ks/x86_64.initrd.img_el5
+
+                                                                        dest=/boot/initrd.img
+                                                                        server=${server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+                                                                        failover=failure
+
+
+
+                        i686.centos_4.upgrademe::
+
+                                ${configroot}/config/ks/i686.vmlinuz.c5_2
+
+                                                                        dest=/boot/vmlinuz
+                                                                        server=${server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+                                                                        failover=failure
+
+                                ${configroot}/config/ks/i686.initrd.img.c5_2
+
+                                                                        dest=/boot/initrd.img
+                                                                        server=${server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+                                                                        failover=failure
+                        failure.x86_64.centos_4.upgrademe::
+
+                                ${configroot}/config/ks/x86_64.vmlinuz_el5
+
+                                                                        dest=/boot/vmlinuz
+                                                                        server=${catchall_server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+
+                                ${configroot}/config/ks/x86_64.initrd.img_el5
+
+                                                                        dest=/boot/initrd.img
+                                                                        server=${catchall_server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+
+
+
+
+                        failure.i686.centos_4.upgrademe::
+
+                                ${configroot}/config/ks/i686.vmlinuz.c5_2
+
+                                                                        dest=/boot/vmlinuz
+                                                                        server=${catchall_server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+
+                                ${configroot}/config/ks/i686.initrd.img.c5_2
+
+                                                                        dest=/boot/initrd.img
+                                                                        server=${catchall_server}
+                                                                        action=fix
+                                                                        backup=false
+                                                                        mode=0777
+
+#############################################END##############################################
+
+                editfiles:
+			!upgrademe::
+
+                        { /etc/grub.conf
+
+                                                        LocateLineMatching "title.*"
+                                                        IncrementPointer "-1"
+                                                        InsertLine "title Kickstart"
+                                                        InsertLine "    root (hd0,0)"
+                                                        InsertLine "    kernel /vmlinuz ksdevice=link ks=$(ks_base_url)$(host)"
+                                                        InsertLine "    initrd /initrd.img"
+                        }
+			upgrademe::
+
+                        { /etc/grub.conf
+
+                                                        LocateLineMatching "title.*"
+                                                        IncrementPointer "-1"
+                                                        InsertLine "title Upgrade Kickstart"
+                                                        InsertLine "    root (hd0,0)"
+                                                        InsertLine "    kernel /vmlinuz ksdevice=link ks=$(ks_base_url)$(host)"
+                                                        InsertLine "    initrd /initrd.img"
+                        }

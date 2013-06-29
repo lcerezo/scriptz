@@ -1,0 +1,15 @@
+#Prepend domain search options in dhcp config so dhclient will stop munging up resolv.conf
+#add other regions as required.
+#wish there was an easy way to edit only for the active interface...
+#DCY 2/16/2012
+
+control:
+	actionsequence = ( editfiles )
+
+editfiles:
+
+	HOU.AllLinuxWorkstations.el6::
+
+		{ /etc/dhcp/dhclient-eth0.conf 
+			AppendIfNoSuchLine "prepend domain-search \"hou.compute.pgs.com\", \"dev.hou.compute.pgs.com\";"
+		}

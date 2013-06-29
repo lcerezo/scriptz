@@ -1,0 +1,152 @@
+#!/usr/bin/perl
+#
+#   Copyright 2011 Likewise
+#   All Rights Reserved.
+#   Version 1.02
+#
+#   Input $userfile, tab or comma separated list of users and aliases.
+#   run from a computer in the cell that you want to make changes
+#   It will generate a bash script for process review.
+#   run the bash script to make the changes
+#
+use Getopt::Long;
+use Carp;
+use File::Basename;
+my $gVer = "1.0.0";
+#
+my $userfile = "/tmp/logonnames.txt";
+my $runfile = "changealias.sh";
+my $authstring = "";
+
+sub main();
+main();
+#
+sub getcellbase()
+{
+	chomp;
+	s/CN=\$LikewiseIdentityCell,//;
+	return $_;
+}
+sub WhichCell($)
+{
+	my ($joinOU) = @_;
+    #
+    # this does not give what we want:	
+    #	$command = "/opt/likewise/bin/lw-adtool -a search-cells --search-base $joinOU $authstring";
+    #
+	my @cells;
+	my @candidates;
+	$command = "/opt/likewise/bin/lw-adtool -a search-cells $authstring";
+	@cells = map(getcellbase , grep(/\$LikewiseIdentityCell/, `$command`));
+	print("joinOu is $joinOU\n");
+	foreach my $cell (@cells) {
+	    print("cell $cell\n");
+		if($joinOU =~ /$cell/) {
+			push(@candidates, $cell);	
+		}
+	}
+	@candidates = sort { length($b) <=> length($a) } @candidates;
+	return $candidates[0];
+}
+
+#######################################################
+sub usage($)
+{
+    my $opt = shift || confess "no options hash passed to usage!\n";
+    my $scriptName = fileparse($0);
+    my $helplines = "
+$scriptName version $gVer 
+(c) 2011, Likewise Software
+All Rights Reserved.
+
+usage: $scriptName [options] files
+
+    Modify a cell for the current cell.
+        $scriptName 
+
+    Modify a cell for computers in the base OU 
+    (searches AD for the cell above the specified base)
+
+        $scriptName --base=OU=mySecureOU,DC=connable,DC=com
+
+";
+    return $helplines;
+}
+
+# returns pretty "on/off" status for the default values
+sub getOnOff($) 
+{
+    my $test = shift;
+    if ($test) {
+        return $test if ($test=~/../ || $test > 1);
+        return "on";
+    } else {
+        return "off";
+    }
+}
+
+sub main() 
+{
+    $opt = {
+        base => "",
+        user => "",
+        passwd => "",       
+    };
+    my $ok = GetOptions($opt,
+        'help|h|?',
+        'base|b=s',
+        'auth|a=s',
+        'user|u=s',
+        'passwd|p=s',
+    );
+    if($opt->{base} eq "") {
+        $opt->{base} = `/opt/likewise/bin/domainjoin-cli query | grep Distin`;
+        $opt->{base} =~ s/^[^,]*,//;
+    }
+    chomp($opt->{base});
+    print("base is $opt->{base}\n");
+    if($opt->{user} ne "") {
+        $authstring = "--logon-as=$opt->{user} --passwd=$opt->{passwd}"; 
+    }
+    if ($opt->{help} or not $ok) {
+        print usage($opt);
+        exit 0;
+    }
+    # test to see if this has a chance
+    print("authstring = $authstring\n");
+	$command = "/opt/likewise/bin/lw-adtool -a search-cells $authstring 2>&1";
+	print("attempting command $command\n");
+	$result = `$command`;
+	if ($result =~ /ERROR/) {
+		print("Lacking sufficient privileges\n");
+		exit(1);
+	}
+    print("Cell is at or above: $opt->{base}\n");
+	$cell = WhichCell($opt->{base});
+	die("can not identify cell") if ($cell eq "");
+	print "We are modifying cell $cell\n";
+	print("Creating script $runfile\n");
+	open(RUNFILE, ">$runfile") or die("can't open output file $runfile\n");
+	`chmod +x $runfile`;
+	print RUNFILE "#!/bin/bash\n";
+	open(FILE,"<$userfile") or die("can't open input file $userfile\n");
+	while(<FILE>) {
+		chomp();
+		/(.*)[\t,](.*)/;
+		my $sAMAccountName = $1;
+		my $alias = $2;
+		@results = `/opt/likewise/bin/lw-adtool -a lookup-cell-user --dn $cell --user $1 $authstring --login-name`;
+		@login = grep(/login-name/,@results);
+		$oldalias = $login[0];
+		chomp($oldalias);
+		$oldalias =~ s/login-name: //;
+		print RUNFILE ("#changing the alias of $sAMAccountName\n");
+		print RUNFILE ("echo $sAMAccountName\n");
+		print RUNFILE ("echo old alias\n");
+		print RUNFILE ("/opt/likewise/bin/lw-adtool -a lookup-cell-user --dn $cell --user $1 $authstring --login-name\n");
+		print RUNFILE ("/opt/likewise/bin/lw-adtool -a edit-cell-user --dn \"$cell\" --user $sAMAccountName  $authstring --login-name $alias\n");
+		print RUNFILE ("echo new alias\n");
+		print RUNFILE ("/opt/likewise/bin/lw-adtool -a lookup-cell-user --dn $cell --user $1 $authstring --login-name\n");
+	}
+	close(RUNFILE);
+}

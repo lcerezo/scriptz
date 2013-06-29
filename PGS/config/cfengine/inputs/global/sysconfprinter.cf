@@ -1,0 +1,13 @@
+control:
+
+        actionsequence  = ( packages shellcommands )
+
+packages:
+        AllLinuxWorkstations::
+
+                system-config-printer  pkgmgr=rpm elsedefine=needs_sysconfprinter
+
+shellcommands:
+
+        needs_sysconfprinter::
+                "${yum_bin} -y --disablerepo=epel --disablerepo=rpmforge install system-config-printer"

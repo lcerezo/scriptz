@@ -1,0 +1,21 @@
+control:
+
+        actionsequence  = ( packages shellcommands )
+
+packages:
+        AllLinuxWorkstations::
+
+                mplayer  pkgmgr=rpm elsedefine=needs_mplayer
+		libsndfile  pkgmgr=rpm cmp=ge version=0:1.0.17-1.el5.rf define=rem_libsndfile
+
+shellcommands:
+	
+	rem_libsndfile.!el6::
+		"${rpm_bin} -e --nodeps libsndfile.i386"
+
+        needs_mplayer.!el6::
+                "${yum_bin} -y --enablerepo=rpmforge32 install mplayer.i386 mplayerplug-in.i386"
+
+#no mplayerplug-in for el6, it seems.  gstreamer-* should handle all that anyway
+        needs_mplayer.el6::
+                "${yum_bin} -y install mplayer"

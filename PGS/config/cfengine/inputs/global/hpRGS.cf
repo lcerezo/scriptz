@@ -1,0 +1,26 @@
+control:
+
+        actionsequence  = ( packages shellcommands editfiles )
+
+packages:
+	LON.AllLinuxWorkstations.!SGD_Servers::
+
+        	rgsender_linux_64  	pkgmgr=rpm 
+					cmp=ge
+					version=0:5.4.6-1
+					elsedefine=needs_rgs
+
+shellcommands:
+
+        needs_rgs::
+        
+			"$(rpm_bin) -Uvh $(rpms_base_url)/RGSreceiver/rgsender_config_64-5.4.6-1.x86_64.rpm $(rpms_base_url)/RGSreceiver/rgsender_linux_64-5.4.6-1.x86_64.rpm"
+editfiles:
+
+        LON.AllLinuxWorkstations.!SGD_Servers::		
+			
+		{ /etc/opt/hpremote/rgsender/.rgslm
+		#AutoCreate
+		#AppendIfNoSuchLine 	"export LM_LICENSE_FILE=27001@lonlm20.onshore.pgs.com"
+		HashCommentLinesContaining	"lonlm20"
+		}

@@ -1,0 +1,35 @@
+chown-all-files.pl
+  - Use to chown files on a filesystem in a single depth-first find.  Run as "--help" to see options required and usage.
+
+getent.pl
+  - replacement for "getent" for systems that don't have it like HPUX and AIX.  Also prints perl-equivalent code for discussiong NssEnumerationEnabled issues with developers.
+
+get-ostype.sh
+  - Stub code to type an OS by platform and architecture, setting OS-dependent values in the process
+
+helper-functions.sh
+  - reusable and often reused functions for other scripts
+
+last-awk
+  - the 8-character awk statement Rob can never remember
+
+localmap.sh
+  - bash script to generate user and group maps for chown-all-files.pl by comparing /etc/passwd and /etc/group against AD
+
+lw6.0-audit-enable.sh
+  - turn on auditing via lwregshell rather than Group Policy
+
+lw6.0-registry-settings.sh
+  - other registry settings.  Mostly for useage information
+
+perllib
+  - required for chown-all-files.pl and restore-chown-files.pl - includes LwDeploy.pm module those scripts require.
+
+restore-chown-files.pl
+  - reads in the logs from chown-all-files.pl and reverses the changes made by it.
+
+sidhash.pl
+  - generates LWO UID hash values from a SID.
+
+ypcat.pl
+  - drop-in replacement for ypcat once on Likewise

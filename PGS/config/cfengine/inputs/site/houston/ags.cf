@@ -1,0 +1,50 @@
+control:
+        actionsequence = ( copy directories editfiles shellcommands packages )
+	AddInstallable = ( failure )
+
+copy:
+	ags::
+                ${configroot}/config/cfengine/inputs/site/houston/auto.direct.ags      dest=/etc/autofs_pgs/auto.direct
+                                                                        server=${server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        define=HUPautofs
+                                                                        failover=failure
+	ags.failure::
+                ${configroot}/config/cfengine/inputs/site/houston/auto.direct.ags      dest=/etc/autofs_pgs/auto.direct
+                                                                        server=${catchall_server}
+                                                                        owner=root
+                                                                        group=root
+                                                                        mode=0644
+                                                                        type=sum
+                                                                        define=HUPautofs
+
+
+directories:
+	ags::
+		/etc/autofs_pgs
+		mode=755
+		owner=root
+		group=root
+
+packages:
+        ags::
+                k3b        pkgmgr=rpm elsedefine=needs_k3b
+		glabels	   pkgmgr=rpm elsedefine=needs_glabels
+
+shellcommands:
+	ags.HUPeth0::
+		"/etc/init.d/network restart" ifelapsed=300 useshell=false
+
+	ags.HUPautofs::
+		"/sbin/service autofs reload" useshell=false
+
+	ags::
+		"/usr/bin/gconftool-2 --config-source xml:readwrite:/etc/gconf/gconf.xml.defaults --type string -s /desktop/gnome/url-handlers/mailto/command \"thunderbird -compose %s\"" ifelapsed=600 useshell=false
+
+	ags.needs_k3b::
+		"${yum_bin} -y install k3b k3b-extras"
+	ags.needs_glabels::
+		"${yum_bin} -y install glabels"

@@ -1,0 +1,54 @@
+#alter the cups stuff.
+#adds the printserver  to the client
+# Mar 30, 2006 | Initial Creation | Luis E. Cerezo
+
+control:
+	actionsequence = (  editfiles shellcommands )
+	
+	
+	editfiles:
+
+		HOU.linux::
+			 { /etc/cups/client.conf
+       			 DeleteLinesContaining      "ServerName linprt2.houston.pgs.com"
+			 AppendIfNoSuchLine	    "ServerName houps23.onshore.pgs.com"
+			 DefineClasses	"HUPcups"
+       			 }
+		!percf20.PER::
+			 { /etc/cups/client.conf
+			 AppendIfNoSuchLine	    "ServerName percf20.onshore.pgs.com"
+			 DefineClasses	"HUPcups"
+       			 }
+		!heights.LON.linux::
+			 { /etc/cups/client.conf
+			 AppendIfNoSuchLine	    "ServerName lonps01.london.pgs.com"
+			 DefineClasses	"HUPcups"
+       			 }
+		heights.linux::
+			 { /etc/cups/client.conf
+       			 DeleteLinesContaining      "ServerName lonps01.london.pgs.com"
+			 AppendIfNoSuchLine	    "ServerName lonps20.onshore.pgs.com"
+			 DefineClasses	"HUPcups"
+       			 }
+		kualalumpurDTs.KUL::
+			 { /etc/cups/client.conf
+			 AppendIfNoSuchLine	    "ServerName kualincf20.onshore.pgs.com"
+			 DefineClasses	"HUPcups"
+       			 }
+                VH.linux::
+                         { /etc/cups/client.conf
+                         DeleteLinesContaining      "ServerName 172.16.17.100"
+                         DeleteLinesContaining      "ServerName houlinprt01.houston.pgs.com"
+                         AppendIfNoSuchLine         "ServerName vilcf20.onshore.pgs.com"
+                         DefineClasses  "HUPcups"
+                         }
+		SIN::
+			 { /etc/cups/client.conf
+			 AppendIfNoSuchLine	    "ServerName sinfs21.onshore.pgs.com"
+			 DefineClasses	"HUPcups"
+			 }
+		shellcommands:
+
+		linux.HUPcups::
+
+			"/sbin/service cups restart"	useshell=false
