@@ -1,6 +1,4 @@
-# $Id: cfengine-pgs.spec,v 1.6 2011/09/26 20:22:18 lcerezo Exp $
-# Authority: pgs
-
+#lcerezo tomcat 7 build spec
 Summary: Tomcat 7 build for viasat
 Name: tomcat7-el6-viasat
 Version: 0.0.1
@@ -29,6 +27,7 @@ exit 0
 /sbin/chkconfig --add tomcat7
 /sbin/chkconfig tomcat7 on
 %files
+attr(644, root, root)/etc/init.d/tomcat7
 %defattr(774,root,root)
 /apps/tomcat/certs
 /apps/tomcat/certs/PSSSUBCERT01.cer
