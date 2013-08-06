@@ -22,7 +22,7 @@ def draw_poly(t, n, sz):
 
 def draw_spiral(t, ang, turns):
 	for side in range(turns):
-		side = side + 5
+		side = side + 10
 		t.forward(side)
 		t.left(ang)
 		
@@ -34,6 +34,6 @@ wn.title("Alex meets a funk-shun")
 
 teddy = turtle.Turtle()
 teddy.pensize(1)
-draw_spiral(teddy, 91, 100)
+draw_spiral(teddy, 91, 400)
 
 wn.mainloop()
