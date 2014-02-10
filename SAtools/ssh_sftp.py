@@ -52,6 +52,7 @@ if __name__ == "__main__":
 		f = open(hostlist)
 		for nodes in f.readlines():
 			pushoptouts(nodes.strip())
+		return_nagios_state("OK", "Files pushed with no errors")
 	except Exception, e:
 		return_nagios_state("critical", e)
 	f.close()
