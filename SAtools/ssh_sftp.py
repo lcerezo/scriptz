@@ -38,8 +38,20 @@ def getfilestopush(dir):
 			files.append(fls)
 	return files
 
+def return_nagios_state(state, extinfo):
+        print state, extinfo
+        if state.lower() == "critical":
+                sys.exit(2)
+        elif state.lower() == "warning":
+                sys.exit(1)
+        else:
+                sys.exit(0)
+
 if __name__ == "__main__":
-	f = open(hostlist)
-	for nodes in f.readlines():
-		pushoptouts(nodes.strip())
+	try:
+		f = open(hostlist)
+		for nodes in f.readlines():
+			pushoptouts(nodes.strip())
+	except Exception, e:
+		return_nagios_state("critical", e)
 	f.close()
