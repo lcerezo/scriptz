@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import paramiko, os, sys, glob, fnmatch
 
+
 optoutfilelist = glob.glob('/tmp/*.csv')
 targetdir = ('/dev/shm/')
 paramiko.util.log_to_file('./p.logs')
