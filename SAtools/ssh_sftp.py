@@ -18,7 +18,7 @@ def pushoptouts(host):
 	for file in optoutfiles:
 		srcfullpath = ( srcdir + file )
 		destfullpath = (targetdir + file )
-	#	#sftp.put(file, str.join(targetdir,file))
+	##	#sftp.put(file, str.join(targetdir,file))
 		sftp.put(srcfullpath, destfullpath)
 		#print srcfullpath,  destfullpath
 	sftp.close()
