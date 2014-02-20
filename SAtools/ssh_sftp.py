@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import paramiko, os, sys, glob, fnmatch
 
+
 optoutfilelist = glob.glob('/tmp/*.csv')
 targetdir = ('/dev/shm/')
 paramiko.util.log_to_file('./p.logs')
@@ -18,7 +19,7 @@ def pushoptouts(host):
 	for file in optoutfiles:
 		srcfullpath = ( srcdir + file )
 		destfullpath = (targetdir + file )
-	#	#sftp.put(file, str.join(targetdir,file))
+	##	#sftp.put(file, str.join(targetdir,file))
 		sftp.put(srcfullpath, destfullpath)
 		#print srcfullpath,  destfullpath
 	sftp.close()
@@ -39,13 +40,13 @@ def getfilestopush(dir):
 	return files
 
 def return_nagios_state(state, extinfo):
-        print state, extinfo
-        if state.lower() == "critical":
-                sys.exit(2)
-        elif state.lower() == "warning":
-                sys.exit(1)
-        else:
-                sys.exit(0)
+	print state, extinfo
+	if state.lower() == "critical":
+		sys.exit(2)
+	elif state.lower() == "warning":
+		sys.exit(1)
+	else:
+		sys.exit(0)
 
 if __name__ == "__main__":
 	try:
