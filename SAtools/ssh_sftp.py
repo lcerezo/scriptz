@@ -54,5 +54,5 @@ if __name__ == "__main__":
 			pushoptouts(nodes.strip())
 		return_nagios_state("OK", "Files pushed with no errors")
 	except Exception, e:
-		return_nagios_state("critical", e)
+		return_nagios_state("CRITICAL", e)
 	f.close()
