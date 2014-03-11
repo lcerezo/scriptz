@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import paramiko, os, sys, glob, fnmatch, argparse
+import paramiko, os, sys, glob, fnmatch, argparse, time
 '''This will ssh into each host and stop/start fsm in the correct order. currently it does not check if java actually exited.'''
 
 parser = argparse.ArgumentParser()
@@ -14,8 +14,8 @@ stopwww = '/fsm/fsmwww/apache-tomcat-7.0.34/bin/shutdown.sh'
 startqueue = '/fsm/fsmqueue/apache-activemq-5.8.0/bin/linux-x86-64/activemq start'
 stopqueue = '/fsm/fsmqueue/apache-activemq-5.8.0/bin/linux-x86-64/activemq stop'
 # app hosts
-hosts = [ 'fsm11-dev.mgt.wdc1.wildblue.net', 'fsm12-dev.mgt.wdc1.wildblue.net' ]
-activemqhost = 'fsm11-dev.mgt.wdc1.wildblue.net'
+hosts = [ 'fsm11-prod.mgt.wdc1.wildblue.net', 'fsm12-prod.mgt.wdc1.wildblue.net', 'fsm13-prod.mgt.wdc1.wildblue.net' ]
+activemqhost = 'fsm11-prod.mgt.wdc1.wildblue.net'
 
 
 def sshcontrol(host, user2, runcmd):
@@ -28,24 +28,27 @@ def sshcontrol(host, user2, runcmd):
 	#print "stderr: ", stderr.readlines()
 	print( 'Host:: ' + host + ' replied to command ' + runcmd )
 	print stdout.readlines()
+	print ("sleeping for tomcat startup")
 
 def stopfsm(hostlist, mqnode):
-	for nodes in hostlist():
+	for nodes in hostlist:
 		sshcontrol(nodes, "fsmwww", stopwww)
 		sshcontrol(nodes, "fsmapi", stopapi)
 		sshcontrol(nodes, "fsmmobile", stopmobile)
 	sshcontrol(mqnode, "fsmqueue", stopqueue)
 
 def startfsm(hostlist, mqnode):
-	#sshcontrol(mqnode, "fsmqueue", startqueue)
+	sshcontrol(mqnode, "fsmqueue", startqueue)
 	for nodes in hostlist:
-		sshcontrol(nodes, "fsmwww", startwww)
 		sshcontrol(nodes, "fsmapi", startapi)
+		time.sleep(30)
 		sshcontrol(nodes, "fsmmobile", startmobile)
+		time.sleep(30)
+		sshcontrol(nodes, "fsmwww", startwww)
 
 if __name__ == "__main__":
 	paramiko.util.log_to_file('./p.logs')
 	if args.do == "start":
-		startfsm(hosts, activemqhost )
+			startfsm(hosts, activemqhost )
 	elif args.do == "stop":
-		stopfsm(hosts, activemqhost )
+			stopfsm(hosts, activemqhost )
