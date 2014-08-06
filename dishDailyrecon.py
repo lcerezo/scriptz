@@ -36,7 +36,7 @@ if __name__ == "__main__":
 	if isittimeyet(latehour):
 		for fn in reportfiles:
 			checkfile(fn)
-		if len([for fn in reportfiles]) == len(reportfiles)
+		if len([for fn in reportfiles]) == len(reportfiles):
 			nagAlert("OK", "All is well, carryon")
 	else:
 		print "something wong!"
