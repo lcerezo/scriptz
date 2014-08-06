@@ -37,6 +37,6 @@ if __name__ == "__main__":
 		for fn in reportfiles:
 			checkfile(fn)
 		if len([for fn in reportfiles]) == len(reportfiles)
-			nagAlert("OK", "All is well, carryon" 
+			nagAlert("OK", "All is well, carryon")
 	else:
 		print "something wong!"
