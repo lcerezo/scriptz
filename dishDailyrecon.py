@@ -20,16 +20,16 @@ errormsg = "The current time is " + str(now) + " and the report is not yet there
 
 #simple function to check if it is time yet.
 def isittimeyet(h):
-	if now.hour > h:
-		return True
-	else:
-		return False
+    if now.hour > h:
+        return True
+    else:
+        return False
 #is the file there and does it have some content?
 def checkfile(f):
-	if os.path.isfile(f) and os.path.getsize(f) > 0: 
-		return True
-	else:
-		return False
+    if os.path.isfile(f) and os.path.getsize(f) > 0: 
+        return True
+    else:
+        return False
 
 #funciton for yelling at nagios err.. nrpe.
 def nagAlert(state, extinfo):
