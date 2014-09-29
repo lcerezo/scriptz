@@ -1,4 +1,0 @@
-#!/usr/bin/perl 
-$dnsreg = "/opt/likewise/bin/lw-update-dns";
-$s = rand(300);
-system "sleep $s \; $dnsreg";

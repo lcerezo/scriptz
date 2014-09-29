@@ -1,7 +1,0 @@
-control:
-
-        actionsequence = ( shellcommands )
-
-        shellcommands:
-                        onshorecrew::
-                                        "/usr/sbin/usermod -s '/bin/csh' root"

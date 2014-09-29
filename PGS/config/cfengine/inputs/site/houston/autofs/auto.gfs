@@ -1,3 +1,0 @@
-hgfs01vol -fstype=glusterfs	hgfs01.hou.compute.pgs.com:/hgfs01vol
-hgfs01ssd -fstype=glusterfs	hgfs01.hou.compute.pgs.com:/hgfs01ssd
-

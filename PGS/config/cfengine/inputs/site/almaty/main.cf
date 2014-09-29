@@ -1,6 +1,0 @@
-control:
-	actionsequence = ( files )
-files:
-                        /etc/pgs_alm
-                                        owner=root
-                                        mode=0644

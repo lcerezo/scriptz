@@ -1,9 +1,0 @@
-/users		vilcf20.onshore.pgs.com:/data/users 
-/tps 		vilcf20.onshore.pgs.com:/data/tps
-/cm		vilcf20.onshore.pgs.com:/data/cm
-/cfs		vilcf20.onshore.pgs.com:/san/cfs
-/datadb		vilcf20.onshore.pgs.com:/data/datadb
-/scratch-VIL	vilcf20.onshore.pgs.com:/san/scratch
-#/dmz		142.63.138.101:/san/dmz
-/dmz		172.16.17.49:/san/dmz
-/pgs		172.16.17.54:/pgs

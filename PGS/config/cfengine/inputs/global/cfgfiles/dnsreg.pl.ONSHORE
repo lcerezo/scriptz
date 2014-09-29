@@ -1,4 +1,0 @@
-#!/usr/bin/perl 
-$dnsreg = "/usr/centeris/bin/lwinet -P ads dns register";
-$s = rand(300);
-system "sleep $s \; $dnsreg";
