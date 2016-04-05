@@ -36,6 +36,9 @@ if __name__ == "__main__":
             myjson = json.dumps(args)
             thisurl = gen_url(opts.apikey, opts.routekey)
             rt, rsc = post_message(thisurl, myjson)
-            print 'ERROR : %s %s ' % (rt, rsc)
+            if rsc != 200:
+                print 'ERROR : %s %s ' % (rt, rsc)
+            else:
+                print rt
         except Exception, err:
             print 'Failed to make a magical unicorn rainbows error was %s ' % (err)
