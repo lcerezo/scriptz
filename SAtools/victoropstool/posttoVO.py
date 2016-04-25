@@ -37,7 +37,8 @@ class postToVO(object):
         try:
             response = requests.post(myurl, data=payload)
         except PostError, err:
-            print 'Error posting to Victoops %s \n\nresponse was %s\n HTTP code was %s\n\n' % (err, response.text, response.status_code)
+            error = 'Error posting to Victoops %s \n\nresponse was %s\n HTTP code was %s\n\n' % (err, response.text, response.status_code)
+            raise SystemExit(error)
         else:
             return response.text, response.status_code
 
@@ -56,4 +57,5 @@ if __name__ == "__main__":
             else:
                 print httpResponseText
         except Exception, err:
-            print 'Failed to make a magical unicorn rainbows error was %s ' % (err)
+            error = 'Failed to make a magical unicorn rainbows error was %s ' % (err)
+            raise SystemExit(error)
