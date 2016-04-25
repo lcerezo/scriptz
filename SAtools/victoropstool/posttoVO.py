@@ -36,11 +36,13 @@ class postToVO(object):
     def post_message(self, myurl, payload):
         try:
             response = requests.post(myurl, data=payload)
-        except PostError, err:
+            return response.text, response.status_code
+        except requests.exceptions.ConnectionError, err:
+            error = "connection error, error was\n{0}".format(err)
+            raise SystemExit(error)
+        except Exception, err:
             error = 'Error posting to Victoops %s \n\nresponse was %s\n HTTP code was %s\n\n' % (err, response.text, response.status_code)
             raise SystemExit(error)
-        else:
-            return response.text, response.status_code
 
 if __name__ == "__main__":
         try:
@@ -52,10 +54,10 @@ if __name__ == "__main__":
             myIncident = postToVO()
             thisurl = myIncident.gen_url(opts.apikey, opts.routekey)
             httpResponseText, httpResponseCode = myIncident.post_message(thisurl, myjson)
-            if httpResponseCode != 200:
-                print 'ERROR : %s %s ' % (httpResponseText, httpResponseCode)
-            else:
+            if httpResponseCode == 200:
                 print httpResponseText
+            else:
+                print 'ERROR BODY :\n\n\n %s \n\n\n HTTP CODE%s ' % (httpResponseText, httpResponseCode)
         except Exception, err:
             error = 'Failed to make a magical unicorn rainbows error was %s ' % (err)
             raise SystemExit(error)
