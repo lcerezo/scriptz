@@ -51,9 +51,9 @@ if __name__ == "__main__":
             myIncident = postToVO()
             thisurl = myIncident.gen_url(opts.apikey, opts.routekey)
             httpResponseText, httpResponseCode = myIncident.post_message(thisurl, myjson)
-            if rsc != 200:
+            if httpResponseCode != 200:
                 print 'ERROR : %s %s ' % (httpResponseText, httpResponseCode)
             else:
-                print rt
+                print httpResponseText
         except Exception, err:
             print 'Failed to make a magical unicorn rainbows error was %s ' % (err)
