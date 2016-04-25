@@ -50,9 +50,9 @@ if __name__ == "__main__":
 # uncomment the above line to print json payload to console to validate it is doing what you want.
             myIncident = postToVO()
             thisurl = myIncident.gen_url(opts.apikey, opts.routekey)
-            rt, rsc = myIncident.post_message(thisurl, myjson)
+            httpResponseText, httpResponseCode = myIncident.post_message(thisurl, myjson)
             if rsc != 200:
-                print 'ERROR : %s %s ' % (rt, rsc)
+                print 'ERROR : %s %s ' % (httpResponseText, httpResponseCode)
             else:
                 print rt
         except Exception, err:
