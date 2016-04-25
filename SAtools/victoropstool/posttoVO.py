@@ -41,7 +41,7 @@ class postToVO(object):
             error = "connection error, error was\n{0}".format(err)
             raise SystemExit(error)
         except Exception, err:
-            error = 'Error posting to Victoops %s \n\nresponse was %s\n HTTP code was %s\n\n' % (err, response.text, response.status_code)
+            error = 'Error posting to VictorOps %s \n\nresponse was %s\n HTTP code was %s\n\n' % (err, response.text, response.status_code)
             raise SystemExit(error)
 
 if __name__ == "__main__":
