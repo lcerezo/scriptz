@@ -56,11 +56,12 @@ if __name__ == "__main__":
             myIncident = postToVO()
             thisurl = myIncident.gen_url(opts.apikey, opts.routekey)
             httpResponseText, httpResponseCode = myIncident.post_message(thisurl, myjson)
-            jsonResponse = json.loads(httpResponseText)
-            mylog = "IGNORE posted to VictorOps for entityId {0} Result was {1} LOG: {2} {3}".format(jsonResponse['entity_id'], jsonResponse['result'],httpResponseCode,opts.state_message) 
             if httpResponseCode == 200:
+                jsonResponse = json.loads(httpResponseText)
+                mylog = "IGNORE posted to VictorOps for entityId {0} Result was {1} HTTP_RESPONSE: {2} LOG: {3}".format(jsonResponse['entity_id'], jsonResponse['result'],httpResponseCode,opts.state_message) 
                 syslog.syslog(syslog.LOG_INFO, mylog)
             else:
+                mylog = "IGNORE Failed to post to VictorOps for  entityId {0} HTTP_RESPONSE_CODE: {1} LOG: {2} HTTP_RESPONSE_TEXT: {3}".format(opts.entity_id, httpResponseCode, opts.state_message, httpResponseText) 
                 syslog.syslog(syslog.LOG_WARNING, mylog)
         except Exception, err:
             error = 'Failed to make a magical unicorn rainbows error was %s ' % (err)
