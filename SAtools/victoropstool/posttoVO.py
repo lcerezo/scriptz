@@ -58,7 +58,7 @@ if __name__ == "__main__":
             httpResponseText, httpResponseCode = myIncident.post_message(thisurl, myjson)
             if httpResponseCode == 200:
                 jsonResponse = json.loads(httpResponseText)
-                mylog = "IGNORE posted to VictorOps for entityId {0} Result was {1} HTTP_RESPONSE: {2} LOG: {3}".format(jsonResponse['entity_id'], jsonResponse['result'],httpResponseCode,opts.state_message) 
+                mylog = "IGNORE PAGED posted to VictorOps for entityId {0} Result was {1} HTTP_RESPONSE: {2} LOG: {3}".format(jsonResponse['entity_id'], jsonResponse['result'],httpResponseCode,opts.state_message) 
                 syslog.syslog(syslog.LOG_INFO, mylog)
             else:
                 mylog = "IGNORE Failed to post to VictorOps for  entityId {0} HTTP_RESPONSE_CODE: {1} LOG: {2} HTTP_RESPONSE_TEXT: {3}".format(opts.entity_id, httpResponseCode, opts.state_message, httpResponseText) 
