@@ -4,6 +4,8 @@
 import requests
 import argparse
 import json
+import syslog
+
 parser = argparse.ArgumentParser(
                                  description=" seek help. ")
 parser.add_argument('--apikey', action='store', dest='apikey', required=True,
@@ -54,10 +56,12 @@ if __name__ == "__main__":
             myIncident = postToVO()
             thisurl = myIncident.gen_url(opts.apikey, opts.routekey)
             httpResponseText, httpResponseCode = myIncident.post_message(thisurl, myjson)
+            jsonResponse = json.loads(httpResponseText)
+            mylog = "IGNORE posted to VictorOps for entityId {0} Result was {1} LOG: {2} {3}".format(jsonResponse['entity_id'], jsonResponse['result'],httpResponseCode,opts.state_message) 
             if httpResponseCode == 200:
-                print httpResponseText
+                syslog.syslog(syslog.LOG_INFO, mylog)
             else:
-                print 'ERROR BODY :\n\n\n %s \n\n\n HTTP CODE%s ' % (httpResponseText, httpResponseCode)
+                syslog.syslog(syslog.LOG_WARNING, mylog)
         except Exception, err:
             error = 'Failed to make a magical unicorn rainbows error was %s ' % (err)
             raise SystemExit(error)
