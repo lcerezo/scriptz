@@ -61,6 +61,6 @@ if __name__ == "__main__":
         else:
             mylog = "IGNORE Failed to post to VictorOps for  entityId {0} HTTP_RESPONSE_CODE: {1} LOG: {2} HTTP_RESPONSE_TEXT: {3}".format(opts.entity_id, httpResponseCode, opts.state_message, httpResponseText)
             syslog.syslog(syslog.LOG_WARNING, mylog)
-        except Exception, err:
-            error = 'Failed to make a magical unicorn rainbows error was %s ' % (err)
-            raise SystemExit(error)
+    except Exception, err:
+        error = 'Failed to make a magical unicorn rainbows error was %s ' % (err)
+        raise SystemExit(error)
