@@ -59,7 +59,8 @@ if __name__ == "__main__":
             mylog = "IGNORE PAGED posted to VictorOps for entityId {0} Result was {1} HTTP_RESPONSE: {2} ".format(jsonResponse['entity_id'], jsonResponse['result'], httpResponseCode)
             syslog.syslog(syslog.LOG_INFO, mylog)
         else:
-            mylog = "IGNORE Failed to post to VictorOps for  entityId {0} HTTP_RESPONSE_CODE: {1} LOG: {2} HTTP_RESPONSE_TEXT: {3}".format(opts.entity_id, httpResponseCode, opts.state_message, httpResponseText)
+            myNotJsonPayload = json.dumps(myPayload)
+            mylog = "IGNORE Failed to post to VictorOps for  entityId {0} HTTP_RESPONSE_CODE: {1} LOG: {2} HTTP_RESPONSE_TEXT: {3}".format(myNotJsonPayload['entity_id'], httpResponseCode, myNotJsonPayload['state_message'], httpResponseText)
             syslog.syslog(syslog.LOG_WARNING, mylog)
     except Exception, err:
         error = 'Failed to make a magical unicorn rainbows error was %s ' % (err)
