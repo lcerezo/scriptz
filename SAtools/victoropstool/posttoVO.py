@@ -32,8 +32,8 @@ PARSER.add_argument('--swatchId', action='store', dest='swatchId',
 
 def gen_url(myapikey, myroutekey):
     """ Generates the url with api key and route key """
-    baseurl = 'https://alert.victorops.com/integrations/generic/20131114/alert'
-    myurl = '%s/%s/%s' % (baseurl, myapikey, myroutekey)
+    baseurl = '''https://alert.victorops.com/integrations/generic/20131114/alert'''
+    myurl = '''{0}/{1}/{2}/'''.format(baseurl, myapikey, myroutekey)
     return myurl
 
 
@@ -58,7 +58,7 @@ if __name__ == "__main__":
         MY_VO_ARGS = vars(PARSER.parse_args())
         OPTS = PARSER.parse_args()
         if MY_VO_ARGS['entity_id'] is None:
-            MY_VO_ARGS['entity_id'] = "%s::%s" % (OPTS.hostname, OPTS.swatchId)
+            MY_VO_ARGS['entity_id'] = '''{0}:{1}'''.format(OPTS.hostname, OPTS.swatchId)
         MYJSON = json.dumps(MY_VO_ARGS, sort_keys=True, indent=4)
         # print myjson
         # uncomment the above line to print json payload to console
