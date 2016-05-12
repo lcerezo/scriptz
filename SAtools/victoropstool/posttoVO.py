@@ -30,33 +30,28 @@ PARSER.add_argument('--swatchId', action='store', dest='swatchId',
                     required=False, help="swatch code")
 
 
-class PostToVo(object):
-    """ This is the entire post to victorops class
-    It is a class so I can try to learn testing TDD
-    but it does not really need to be.
-    """
+def gen_url(myapikey, myroutekey):
+    """ Generates the url with api key and route key """
+    baseurl = 'https://alert.victorops.com/integrations/generic/20131114/alert'
+    myurl = '%s/%s/%s' % (baseurl, myapikey, myroutekey)
+    return myurl
 
-    def gen_url(self, myapikey, myroutekey):
-        """ Generates the url with api key and route key """
-        baseurl = 'https://alert.victorops.com/integrations/generic/20131114/alert'
-        myurl = '%s/%s/%s' % (baseurl, myapikey, myroutekey)
-        return myurl
 
-    def post_message(self, myurl, payload):
-        """ Posts the message with json payload to victorops url endpoint"""
-        try:
-            response = requests.post(myurl, data=payload)
-            return response.text, response.status_code
-        except requests.exceptions.ConnectionError, err:
-            my_vo_error = 'connection error, error was\n{0}'.format(err)
-            raise SystemExit(my_vo_error)
-        except Exception, err:
-            my_vo_error = '''Error posting to VictorOps %s
-            \n\nresponse was %s\n HTTP code was %s\n\n''' % (
-                err,
-                response.text,
-                response.status_code)
-            raise SystemExit(my_vo_error)
+def post_message(myurl, payload):
+    """ Posts the message with json payload to victorops url endpoint"""
+    try:
+        response = requests.post(myurl, data=payload)
+        return response.text, response.status_code
+    except requests.exceptions.ConnectionError, err:
+        my_vo_error = '''connection error, error was\n{0}'''.format(err)
+        raise SystemExit(my_vo_error)
+    except Exception, err:
+        my_vo_error = '''Error posting to VictorOps {0}
+        \n\nresponse was {1}\n HTTP code was {2}\n\n'''.format(
+            err,
+            response.text,
+            response.status_code)
+        raise SystemExit(my_vo_error)
 
 if __name__ == "__main__":
     try:
@@ -68,9 +63,8 @@ if __name__ == "__main__":
         # print myjson
         # uncomment the above line to print json payload to console
         # to validate it is doing what you want.
-        MY_INCIDENT = PostToVo()
-        THIS_URL = MY_INCIDENT.gen_url(OPTS.apikey, OPTS.routekey)
-        HTTP_RESPONSE_TEXT, HTTP_RESPONSE_CODE = MY_INCIDENT.post_message(THIS_URL, MYJSON)
+        THIS_URL = gen_url(OPTS.apikey, OPTS.routekey)
+        HTTP_RESPONSE_TEXT, HTTP_RESPONSE_CODE = post_message(THIS_URL, MYJSON)
         if HTTP_RESPONSE_CODE == 200:
             JSON_RESPONSE = json.loads(HTTP_RESPONSE_TEXT)
             MY_LOG = '''IGNORE PAGED posted to VictorOps for entityId {0}
@@ -89,5 +83,5 @@ if __name__ == "__main__":
                 HTTP_RESPONSE_TEXT)
             syslog.syslog(syslog.LOG_WARNING, MY_LOG)
     except Exception, err:
-        MAIN_ERROR = 'Failed to make a magical unicorn rainbows error was %s ' % (err)
+        MAIN_ERROR = '''Failed to make a magical unicorn rainbows error was {0}'''.format(err)
         raise SystemExit(MAIN_ERROR)
