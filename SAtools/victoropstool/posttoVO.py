@@ -58,7 +58,7 @@ if __name__ == "__main__":
         MY_VO_ARGS = vars(PARSER.parse_args())
         OPTS = PARSER.parse_args()
         if MY_VO_ARGS['entity_id'] is None:
-            MY_VO_ARGS['entity_id'] = '''{0}:{1}'''.format(OPTS.hostname, OPTS.swatchId)
+            MY_VO_ARGS['entity_id'] = '''{0}::{1}'''.format(OPTS.hostname, OPTS.swatchId)
         MYJSON = json.dumps(MY_VO_ARGS, sort_keys=True, indent=4)
         # print myjson
         # uncomment the above line to print json payload to console
