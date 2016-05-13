@@ -33,7 +33,7 @@ PARSER.add_argument('--swatchId', action='store', dest='swatchId',
 def gen_url(myapikey, myroutekey):
     """ Generates the url with api key and route key """
     baseurl = '''https://alert.victorops.com/integrations/generic/20131114/alert'''
-    myurl = '''{0}/{1}/{2}/'''.format(baseurl, myapikey, myroutekey)
+    myurl = '''{0}/{1}/{2}'''.format(baseurl, myapikey, myroutekey)
     return myurl
 
 
@@ -60,11 +60,11 @@ if __name__ == "__main__":
         if MY_VO_ARGS['entity_id'] is None:
             MY_VO_ARGS['entity_id'] = '''{0}::{1}'''.format(OPTS.hostname, OPTS.swatchId)
         MYJSON = json.dumps(MY_VO_ARGS, sort_keys=True, indent=4)
-        # print myjson
-        # uncomment the above line to print json payload to console
-        # to validate it is doing what you want.
         THIS_URL = gen_url(OPTS.apikey, OPTS.routekey)
         HTTP_RESPONSE_TEXT, HTTP_RESPONSE_CODE = post_message(THIS_URL, MYJSON)
+        # print HTTP_RESPONSE_TEXT
+        # uncomment the above line to print json payload to console
+        # to validate it is doing what you want.
         if HTTP_RESPONSE_CODE == 200:
             JSON_RESPONSE = json.loads(HTTP_RESPONSE_TEXT)
             MY_LOG = '''IGNORE PAGED posted to VictorOps for entityId {0}
