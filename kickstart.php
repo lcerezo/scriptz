@@ -54,7 +54,7 @@ firewall --disabled
 selinux --disabled
 authconfig --enableshadow --enablemd5 
 timezone America/Chicago
-bootloader --location=mbr --append="quiet" --md5pass=\$1\$Jee5ZZgZ\$8PfpunZ5CQS6uLL8ZA5so1
+bootloader --location=mbr --append="quiet" --md5pass=\[$thisisahash]
 clearpart --all --initlabel
 part /boot --fstype ext3 --size=512 --ondisk=$disk
 part pv.1 --size=0 --grow --ondisk=$disk
