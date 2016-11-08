@@ -48,8 +48,8 @@ else {
 	print "network --device eth0 --bootproto=dhcp --noipv6 --hostname=$hostname --nameserver=10.20.16.16";
 }
 print <<<END
-
-rootpw --iscrypted \$1\$I4b1Q87X\$kAXRJydttLs.dc.M1RcOE.
+#the next password should be for building only
+rootpw --iscrypted {initialpasswordhash}
 firewall --disabled
 selinux --disabled
 authconfig --enableshadow --enablemd5 
